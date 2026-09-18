@@ -1,0 +1,5 @@
+.search { max-inline-size: 720px; }
+.search__hint { text-align: center; }
+.search__list { display: grid; gap: 12px; }
+.search__row { justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: var(--fs-md); min-block-size: 56px; border-radius: var(--radius-ctl); }
+.search__meta { color: var(--c-mist); font-weight: 400; font-size: var(--fs-sm); } /* full-strength mist on blue (§5) */

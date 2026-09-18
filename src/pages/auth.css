@@ -1,0 +1,18 @@
+.auth { padding-block: 40px 48px; display: grid; justify-items: center; gap: 20px; }
+.auth__card { inline-size: 100%; max-inline-size: 440px; padding: 40px 32px; display: grid; gap: 20px; }
+.auth__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.auth__title { font-size: var(--fs-xl); text-align: start; }
+.auth__back { color: var(--c-sand); margin-inline-start: auto; }
+.auth__submit { margin-block-start: 4px; }
+.auth__social { display: flex; justify-content: center; gap: 12px; }
+.auth__social li { flex: 1 1 0; min-inline-size: 0; }
+.auth__social .btn { inline-size: 100%; min-inline-size: 0; padding-inline: 8px; }
+@media (min-width: 600px) {
+  .auth__social { gap: 22px; }
+}
+.auth__links { display: grid; gap: var(--tap-gap); justify-items: center; text-align: center; color: var(--c-mist); }
+.auth__links p { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; }
+
+@media (min-width: 1024px) {
+  .auth { padding-block: 64px 80px; }
+}

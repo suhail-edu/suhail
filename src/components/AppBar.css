@@ -1,0 +1,46 @@
+.appbar {
+  position: sticky; inset-block-start: 0; z-index: 20;
+  background: var(--c-surface);
+  border-block-end: 1px solid var(--c-hairline);  /* R5: surface on ground gets an edge… */
+  box-shadow: var(--shadow-rest);                 /* …and a shadow */
+}
+.appbar__row { display: flex; align-items: center; gap: 12px; min-block-size: var(--appbar-h); }
+
+.appbar__brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-block-size: var(--tap); padding-inline-end: 4px;
+  color: var(--c-white); text-decoration: none; font-weight: 700; font-size: var(--fs-lg);
+  transition: transform var(--dur-press);
+}
+.appbar__brand img { inline-size: 28px; block-size: 28px; }
+.appbar__brand:active { transform: scale(.975); }
+
+.appbar__nav { display: none; }
+.appbar__actions { display: flex; align-items: center; gap: var(--tap-gap); margin-inline-start: auto; }
+
+.navlink {
+  display: flex; align-items: center;
+  min-block-size: var(--tap); padding-inline: 12px; padding-block-start: 3px;
+  color: var(--c-mist); text-decoration: none; font-weight: 500;
+  border-block-end: 3px solid transparent;   /* §3: active tab underline = blue */
+  transition: color var(--dur-press), transform var(--dur-press);
+}
+.navlink[aria-current="page"] { color: var(--c-white); border-block-end-color: var(--c-blue); }
+@media (hover: hover) {
+  .navlink:hover { color: var(--c-white); }
+}
+.navlink:active { color: var(--c-white); transform: translateY(1px); }
+
+/* Figma "nave - bar": 57px tall, three links spread across the width */
+.mobilenav { background: var(--c-surface); border-block-start: 1px solid var(--c-hairline); }
+.mobilenav__list { display: flex; justify-content: space-between; align-items: stretch; min-block-size: 57px; gap: var(--tap-gap); }
+.mobilenav__list li { display: flex; }
+
+.searchbar { background: var(--c-surface); border-block-start: 1px solid var(--c-hairline); padding-block: 12px; }
+.searchbar__form { display: flex; gap: var(--tap-gap); }
+.searchbar__form .field__input { flex: 1; min-inline-size: 0; }
+
+@media (min-width: 1024px) {
+  .appbar__nav { display: flex; gap: var(--tap-gap); margin-inline-start: 24px; }
+  .appbar__burger, .mobilenav { display: none; }
+}

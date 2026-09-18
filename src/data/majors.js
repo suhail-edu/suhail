@@ -1,0 +1,81 @@
+// Branches from the Figma "مجال" frame; majors from "علمي" and "أدبي".
+// Only the scientific and literary branches have designed content.
+export const BRANCHES = [
+  {
+    slug: 'scientific',
+    name: 'علمي',
+    title: 'التخصصات الدراسية في مجال العلمي',
+    sections: [
+      {
+        id: 'medical',
+        title: 'التخصصات الطبية',
+        majors: [
+          { id: 'anesthesia', name: 'التخدير' },
+          { id: 'pharmacy', name: 'الصيدلة' },
+          { id: 'medicine', name: 'الطب البشري' },
+          { id: 'dentistry', name: 'طب الأسنان' },
+        ],
+        // revealed by "رؤية المزيد" (Figma shows the button; these entries are provisional)
+        more: [
+          { id: 'nursing', name: 'التمريض' },
+          { id: 'physiotherapy', name: 'العلاج الفيزيائي' },
+          { id: 'medical-labs', name: 'المخابر الطبية' },
+          { id: 'radiology', name: 'التصوير الشعاعي' },
+        ],
+      },
+      {
+        id: 'engineering',
+        title: 'التخصصات الهندسية',
+        majors: [
+          { id: 'civil', name: 'هندسة مدنية' },
+          { id: 'architecture', name: 'هندسة العمارة' },
+          // the Figma frame is cut at two tiles; these two are provisional
+          { id: 'informatics', name: 'الهندسة المعلوماتية' },
+          { id: 'mechanical-electrical', name: 'الهندسة الميكانيكية والكهربائية' },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'literary',
+    name: 'أدبي',
+    title: 'التخصصات الدراسية في مجال الأدبي',
+    sections: [
+      {
+        id: 'arts',
+        title: 'التخصصات الفنية',
+        majors: [
+          { id: 'graphic-design', name: 'غرافيك ديزاين وملتيميديا', icon: 'graphic' },
+          { id: 'painting', name: 'تصوير', icon: 'painting' },
+          { id: 'interior-design', name: 'تصميم داخلي', icon: 'interior' },
+          { id: 'sculpture', name: 'نحت', icon: 'sculpture' },
+          { id: 'printmaking', name: 'حفر وطباعة', icon: 'print' },
+          { id: 'theatre', name: 'فنون مسرحية', icon: 'theatre' },
+          { id: 'music', name: 'موسيقى', icon: 'music' },
+          { id: 'fashion', name: 'الأزياء', icon: 'fashion' },
+        ],
+      },
+    ],
+  },
+  { slug: 'industrial', name: 'صناعي', title: 'التخصصات الدراسية في مجال الصناعي', sections: [] },
+  { slug: 'commercial', name: 'التجاري والنسوي', title: 'التخصصات الدراسية في مجال التجاري والنسوي', sections: [] },
+  { slug: 'arts', name: 'فني', title: 'التخصصات الدراسية في مجال الفني', sections: [] },
+];
+
+export function findBranch(slug) {
+  return BRANCHES.find((b) => b.slug === slug);
+}
+
+export function allMajors() {
+  const out = [];
+  for (const b of BRANCHES) {
+    for (const s of b.sections) {
+      for (const m of [...s.majors, ...(s.more || [])]) out.push({ ...m, branch: b.slug, branchName: b.name, section: s.title });
+    }
+  }
+  return out;
+}
+
+export function findMajor(branchSlug, majorId) {
+  return allMajors().find((m) => m.branch === branchSlug && m.id === majorId);
+}

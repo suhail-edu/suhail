@@ -1,0 +1,51 @@
+.footer {
+  background: var(--c-surface);
+  border-block-start: 1px solid var(--c-hairline);   /* R5 */
+  box-shadow: var(--shadow-rest-up);                  /* R5 */
+  margin-block-start: 48px;
+  padding-block: 44px;
+}
+.footer__tagline {
+  color: var(--c-white); font-weight: 700; font-size: var(--fs-2xl); line-height: 1.4;
+  text-align: center; max-inline-size: 22ch; margin-inline: auto;
+}
+.footer__groups { display: grid; gap: 28px; margin-block-start: 36px; }
+.footer__heading { font-size: var(--fs-xl); margin-block-end: 8px; }
+
+/* Figma lays each group out in two columns, filling the first column top-down */
+.footer__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(var(--rows, 3), auto);
+  column-gap: 16px; row-gap: var(--tap-gap);
+}
+.footer__list--inline { display: flex; justify-content: center; gap: 24px; }
+
+.footer__link {
+  display: flex; align-items: center; gap: 8px;
+  min-block-size: var(--tap);
+  color: var(--c-mist); text-decoration: none;
+  transition: color var(--dur-press), transform var(--dur-press);
+}
+/* chevrons here are mist, not sand: eight sand chevrons would blow the accent budget (§2) */
+.footer__link .icon { color: var(--c-mist); }
+@media (hover: hover) {
+  .footer__link:hover { color: var(--c-white); }
+}
+.footer__link:active { color: var(--c-white); transform: translateY(1px); }
+
+@media (min-width: 1024px) {
+  .footer { margin-block-start: 64px; }
+  /* §8: link groups side by side in one row; the tagline sits above them until there is
+     room for it beside them (≥1440). Lists size to content so nothing overflows. */
+  .footer__inner { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  .footer__tagline { text-align: start; margin-inline: 0; }
+  .footer__groups { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px 40px; margin-block-start: 0; }
+  .footer__list { grid-template-columns: auto auto; }
+  .footer__link span { white-space: nowrap; }
+  .footer__list--inline { display: flex; flex-direction: column; justify-content: flex-start; gap: var(--tap-gap); }
+}
+@media (min-width: 1440px) {
+  .footer__inner { grid-template-columns: minmax(260px, .8fr) 2.6fr; gap: 48px; }
+}

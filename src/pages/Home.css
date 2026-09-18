@@ -1,0 +1,38 @@
+/* ---- hero: mobile = stacked & centred, as drawn ---- */
+.hero { padding-block: 40px 24px; text-align: center; }
+.hero__mark { inline-size: 58px; block-size: 58px; margin-inline: auto; margin-block-end: 44px; }
+.hero__title { font-size: var(--fs-3xl); line-height: 1.3; margin-block-end: 36px; }
+.hero__copy { display: grid; gap: 16px; max-inline-size: var(--measure); margin-inline: auto; justify-items: center; }
+.hero__copy p { max-inline-size: 42ch; }
+.hero__cta { margin-block-start: 12px; min-inline-size: 200px; }
+
+/* ---- services ---- */
+.services { padding-block: 32px 16px; }
+.services__title { text-align: center; font-size: var(--fs-2xl); margin-block-end: 32px; }
+.services__grid { display: grid; gap: 24px; }
+.service {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  min-block-size: 110px; padding: 18px 20px; text-align: center;
+}
+.service__title { font-size: var(--fs-md); color: var(--c-white); }
+.service__text { color: var(--c-mist); font-size: var(--fs-sm); line-height: 1.6; max-inline-size: 40ch; } /* full-strength mist on blue (§5) */
+
+@media (min-width: 600px) {
+  .services__grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+
+/* ---- desktop: hero in two columns, cards in a 2×2 grid (§8) ---- */
+@media (min-width: 1024px) {
+  .hero { padding-block: 72px 40px; text-align: start; }
+  .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .hero__brand { display: flex; align-items: center; gap: 32px; }
+  .hero__mark { inline-size: 128px; block-size: 128px; margin: 0; flex: none; }
+  .hero__title { margin: 0; }
+  .hero__copy { margin-inline: 0; justify-items: start; }
+  .hero__copy p { max-inline-size: none; }
+  .services { padding-block: 40px 24px; }
+  .services__grid { gap: 20px; }
+  .service { min-block-size: 150px; padding: 24px 28px; }
+  .service__title { font-size: var(--fs-lg); }
+  .service__text { font-size: var(--fs-md); }
+}

@@ -1,0 +1,26 @@
+/* ---- مجال: choose a branch ---- */
+.branches__list { display: grid; gap: 28px; max-inline-size: 360px; margin-inline: auto; }
+.branch { min-block-size: 80px; }
+
+@media (min-width: 1024px) {
+  .branches__list { max-inline-size: 900px; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+
+/* ---- علمي / أدبي: tiles ---- */
+.majors__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 17px 22px; }
+.major-tile { min-block-size: 129px; }
+.major-tile__name { font-size: var(--fs-lg); }
+.majors__more { display: flex; justify-content: center; margin-block-start: 28px; }
+.majors__more .btn { min-inline-size: 177px; }
+
+@media (min-width: 600px) {
+  .majors__grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .majors__grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .major-tile { min-block-size: 150px; }
+}
+
+/* ---- major detail (not designed yet — minimal) ---- */
+.major-detail { max-inline-size: 720px; }
+.major-detail__crumb { display: flex; gap: 6px; align-items: center; justify-content: center; margin-block-end: 16px; }

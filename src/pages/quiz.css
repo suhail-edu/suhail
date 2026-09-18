@@ -1,0 +1,48 @@
+.quiz { padding-block: 20px 48px; max-inline-size: 880px; }
+.quiz__meter { margin-block-end: 20px; }
+.quiz__count { text-align: center; color: var(--c-text-secondary); font-size: var(--fs-sm); margin-block-end: 6px; } /* mist@62% on ground */
+.quiz__question {
+  text-align: center; font-size: var(--fs-xl); line-height: 1.5;
+  max-inline-size: 32ch; margin-inline: auto; margin-block-end: 36px;
+}
+.quiz__question:focus { outline: none; }
+
+.quiz__options { display: grid; gap: 13px; }
+.option {
+  position: relative; inline-size: 100%; min-block-size: 99px;
+  padding: 16px 44px;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  font-size: var(--fs-md); line-height: 1.5; font-weight: 500;
+}
+/* Selected: R3 needs a second token ≥3:1 from the blue neighbours — white is 5.78:1.
+   Text on it is ground (R7 logic: never sand on sand, never blue on blue). PROVISIONAL, see report. */
+.option.is-selected { background: var(--c-white); color: var(--c-ground); }
+@media (hover: hover) {
+  .option.is-selected:hover { background: var(--c-white); }
+}
+.option.is-selected:active { background: var(--c-white); }
+.option__check { position: absolute; inset-inline-start: 14px; inset-block-start: calc(50% - 12px); color: var(--c-ground); }
+
+/* Figma: "رجوع" sits at the left edge, "التالي" at the right — i.e. the LTR order.
+   row-reverse in an RTL document reproduces that while staying direction-agnostic. */
+.quiz__nav { display: flex; flex-direction: row-reverse; justify-content: space-between; gap: var(--tap-gap); margin-block-start: 40px; }
+.quiz__nav .btn { min-inline-size: 120px; }
+
+/* ---- result (Figma "ex 9") ---- */
+.result { padding-block: 24px 48px; max-inline-size: 720px; }
+.result__card { padding: 32px 24px; display: grid; gap: 20px; text-align: center; }
+.result__title { font-size: var(--fs-2xl); line-height: 1.45; max-inline-size: 22ch; margin-inline: auto; }
+.result__title:focus { outline: none; }
+.result__desc { line-height: 1.8; max-inline-size: var(--measure); margin-inline: auto; }
+.result__sub { font-size: var(--fs-xl); margin-block-start: 8px; }
+.result__majors { display: grid; gap: var(--tap-gap); inline-size: min(100%, 320px); margin-inline: auto; }
+.result__major { min-block-size: 48px; justify-content: flex-start; padding-inline: 27px; font-size: var(--fs-md); border-radius: var(--radius-ctl); }
+.result__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-block-start: 8px; }
+
+@media (min-width: 1024px) {
+  .quiz { padding-block: 40px 64px; }
+  .quiz__question { font-size: var(--fs-2xl); margin-block-end: 40px; }
+  .quiz__options { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .result { padding-block: 48px 64px; }
+  .result__card { padding: 48px 40px; }
+}

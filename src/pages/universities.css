@@ -1,0 +1,50 @@
+/* ---- list (Figma "جامعات") ---- */
+.unis__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 25px; }
+.uni-tile { min-block-size: 180px; justify-content: flex-start; gap: 12px; padding: 16px 12px; }
+.uni-tile__logo {
+  inline-size: 90px; block-size: 90px; border-radius: 50%;
+  background: var(--c-white);           /* light region for the university's own mark */
+  display: grid; place-items: center; overflow: hidden; flex: none;
+}
+.uni-tile__logo img { inline-size: 60px; block-size: 60px; object-fit: contain; }
+.uni-tile__name { font-size: var(--fs-md); line-height: 1.4; font-weight: 700; }
+
+@media (min-width: 600px) {
+  .unis__grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .unis__grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+}
+
+/* ---- detail (Figma "iPhone 17 - 17") ---- */
+.uni { max-inline-size: 960px; }
+.uni__head { padding: 28px 24px 68px; text-align: center; }
+.uni__head h1 { font-size: var(--fs-2xl); }
+.uni__logo {
+  position: relative; inline-size: 100px; block-size: 100px; border-radius: 50%;
+  background: var(--c-white); box-shadow: var(--shadow-rest);
+  display: grid; place-items: center; margin-inline: auto; margin-block-start: -50px; overflow: hidden;
+}
+.uni__logo img { inline-size: 72px; block-size: 72px; object-fit: contain; }
+.uni__facts { margin: 24px 0 0; display: grid; gap: 6px; font-size: var(--fs-lg); }
+.uni__facts div { display: flex; gap: 6px; flex-wrap: wrap; }
+.uni__facts dt { color: var(--c-white); font-weight: 700; }
+.uni__facts dd { margin: 0; }
+.uni__about { margin-block: 20px; line-height: 1.85; max-inline-size: var(--measure); }
+.uni__site { margin-block-end: 8px; }
+.uni__site span { overflow-wrap: anywhere; }
+.uni__faculties { display: grid; gap: 12px; max-inline-size: 360px; }
+.faculty {
+  background: var(--c-surface);                 /* §3: non-interactive rows */
+  border: 1px solid var(--c-hairline);          /* R5 */
+  box-shadow: var(--shadow-rest);               /* R5 */
+  border-radius: var(--radius-ctl);
+  min-block-size: 45px; padding: 8px 16px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--c-white); font-weight: 500; text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .uni__body { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .uni__faculties { max-inline-size: none; grid-template-columns: 1fr 1fr; }
+}

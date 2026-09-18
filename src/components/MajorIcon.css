@@ -1,0 +1,12 @@
+.major-icon {
+  display: block;
+  background-color: var(--c-white);
+  -webkit-mask-image: var(--icon-url);
+          mask-image: var(--icon-url);
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: var(--icon-size) auto;
+          mask-size: var(--icon-size) auto;
+  -webkit-mask-position: var(--icon-pos);
+          mask-position: var(--icon-pos);
+}

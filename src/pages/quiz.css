@@ -98,6 +98,16 @@
 .pick-start { min-inline-size: 180px; }
 .quiz__enter { animation: rise 420ms cubic-bezier(.2,.8,.2,1) both; }
 .quiz__enter--late { animation-delay: 120ms; }
+.quiz__enter--last { animation-delay: 560ms; }
+/* options fly in fast, decelerate, and settle one after another */
+.option {
+  animation: fly-in 700ms cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: calc(140ms + var(--i, 0) * 110ms);
+}
+@keyframes fly-in {
+  from { opacity: 0; transform: translateY(48px) scale(.94); }
+  to   { opacity: 1; transform: none; }
+}
 
 @keyframes pick-pop { 0% { transform: scale(1); } 40% { transform: scale(1.04); } 100% { transform: scale(1); } }
 @keyframes pick-ring { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(1.1); } }
@@ -112,6 +122,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .branch.is-picked, .branch.is-picked::after, .branch__check path,
-  .branches__list.is-picking li:not(.is-picked-item), .pick-wait, .quiz__enter { animation: none; }
+  .branches__list.is-picking li:not(.is-picked-item), .pick-wait, .quiz__enter, .option { animation: none; }
   .branch__check path { stroke-dashoffset: 0; }
 }

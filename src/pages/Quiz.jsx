@@ -178,7 +178,7 @@ export default function Quiz() {
       </p>
       <h1 id="quiz-question" className="quiz__question quiz__enter" ref={headingRef} tabIndex={-1}>{q.text}</h1>
 
-      <div className="quiz__options quiz__enter quiz__enter--late" role="radiogroup" aria-labelledby="quiz-question">
+      <div className="quiz__options" role="radiogroup" aria-labelledby="quiz-question">
         {q.options.map((opt, i) => {
           const isSel = selected === i;
           return (
@@ -188,6 +188,7 @@ export default function Quiz() {
               role="radio"
               aria-checked={isSel}
               className={`tap option ${isSel ? 'is-selected' : ''}`}
+              style={{ '--i': i }}
               onClick={() => choose(i)}
             >
               {isSel && <Icon name="check" className="option__check" />}
@@ -197,7 +198,7 @@ export default function Quiz() {
         })}
       </div>
 
-      <div className="quiz__nav">
+      <div className="quiz__nav quiz__enter quiz__enter--last">
         <button type="button" className="btn tap" onClick={back}>
           <Icon name="chevron-end" size={16} className="icon--sm" />
           <span>رجوع</span>

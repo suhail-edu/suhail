@@ -10,6 +10,23 @@ import './majors.css';
 
 const storageKey = (branch, id) => `suhail-comments-${branch}-${id}`;
 
+// Tiny seeded generator so the scattered icons land in the same places every render.
+function scatter(seedText, count) {
+  let seed = 0;
+  for (const ch of seedText) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 2 ** 32; };
+  return Array.from({ length: count }, () => ({
+    x: rnd() * 100, y: rnd() * 100, r: rnd() * 60 - 30, s: 26 + rnd() * 34, o: 0.5 + rnd() * 0.5,
+  }));
+}
+
+// Seed comments shown on every major until real ones exist.
+const SEED_COMMENTS = [
+  { id: 'seed-1', name: 'ماريا شتيوي', text: 'أنا بالسنة الثالثة، أكتر شي حبيته مواد التصميم الرقمي والطباعة. الفحص بالبداية بيخوّف بس بالتدريب على الرسم بيمشي الحال.', at: '2026-05-02T10:00:00Z' },
+  { id: 'seed-2', name: 'عمر', text: 'نصيحتي لأي حدا بيفكر بهالاختصاص: ابدأ تعلّم برامج التصميم من هلق، بيوفّر عليك كتير بأول سنة.', at: '2026-06-14T18:30:00Z' },
+  { id: 'seed-3', name: 'نضال', text: 'تخرجت من سنتين وعم اشتغل فريلانس مع عملاء برا. السوق طالب كتير، خصوصاً الموشن غرافيك.', at: '2026-08-21T14:15:00Z' },
+];
+
 function loadComments(key) {
   try {
     const raw = window.localStorage.getItem(key);
@@ -37,8 +54,12 @@ function Comments({ branch, major }) {
     setText('');
   };
 
-  // the box's backdrop: the major's own icon repeated across it
-  const tiles = major.icon ? Array.from({ length: 60 }, (_, i) => <MajorIcon key={i} name={major.icon} size={40} />) : null;
+  // the box's backdrop: the major's own icon scattered across it (seeded, so it doesn't jump between renders)
+  const tiles = major.icon ? scatter(major.id, 34).map((t, i) => (
+    <span key={i} className="comments__tile" style={{ insetInlineStart: `${t.x}%`, insetBlockStart: `${t.y}%`, transform: `rotate(${t.r}deg)`, opacity: t.o }}>
+      <MajorIcon name={major.icon} size={t.s} />
+    </span>
+  )) : null;
 
   return (
     <section className="panel comments" aria-labelledby="comments-title">
@@ -59,11 +80,13 @@ function Comments({ branch, major }) {
           <button type="submit" className="btn btn--primary comments__submit" disabled={!text.trim()}>أضف تعليقك</button>
         </form>
 
-        {comments.length === 0 ? (
+        {(() => {
+          const all = [...comments, ...SEED_COMMENTS];
+          return all.length === 0 ? (
           <p className="comments__empty">لا تعليقات بعد — كن أول من يشارك تجربته.</p>
         ) : (
           <ul className="comments__list">
-            {comments.map((c) => (
+            {all.map((c) => (
               <li key={c.id} className="comment">
                 <div className="comment__head">
                   <span className="comment__name">{c.name}</span>
@@ -73,7 +96,8 @@ function Comments({ branch, major }) {
               </li>
             ))}
           </ul>
-        )}
+        );
+        })()}
       </div>
     </section>
   );

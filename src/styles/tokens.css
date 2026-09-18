@@ -37,10 +37,9 @@
   --shadow-rest-up: 0 -6px 16px -6px rgb(0 0 0 / .55);
 
   /* ---- layout & type (project conventions, not colour law) ---- */
-  /* Vazirmatn for reading; Reem Kufi — geometric Kufi, the same right-angle construction as the
-     Suhail mark — for headlines, navigation and tile labels. */
-  --font: 'Vazirmatn', system-ui, 'Segoe UI', Tahoma, Arial, sans-serif;
-  --font-display: 'Reem Kufi', 'Vazirmatn', system-ui, sans-serif;
+  /* One family: Cairo for everything; headings use the heavier weights. */
+  --font: 'Cairo', system-ui, 'Segoe UI', Tahoma, Arial, sans-serif;
+  --font-display: 'Cairo', system-ui, 'Segoe UI', Tahoma, Arial, sans-serif;
   --fs-sm: 14px;
   --fs-md: 16px;
   --fs-lg: 18px;

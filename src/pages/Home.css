@@ -26,7 +26,7 @@
   .hero { padding-block: 72px 40px; text-align: start; }
   .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
   /* mark above the headline, as on mobile; the headline stays on one line */
-  .hero__brand { display: grid; justify-items: start; gap: 28px; }
+  .hero__brand { display: grid; justify-items: center; justify-self: start; gap: 28px; text-align: center; }
   .hero__mark { inline-size: 128px; block-size: 128px; margin: 0; }
   .hero__title { margin: 0; white-space: nowrap; }
   .hero__copy { margin-inline: 0; justify-items: start; }

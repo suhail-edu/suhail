@@ -1,5 +1,5 @@
 import majorsSheet from '../../assets/majors.png';
-import majors2Sheet from '../../assets/majors2.png';
+import majors2Sheet from '../generated/majors2-mask.png'; // assets/majors2.png with the dark dots cut out (npm run icons)
 import './MajorIcon.css';
 
 // The two sprite sheets in /assets. Boxes were measured from the PNG alpha channel.

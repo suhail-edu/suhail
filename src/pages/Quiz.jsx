@@ -9,6 +9,7 @@ import { BRANCHES } from '../data/majors.js';
 import './quiz.css';
 
 const TOTAL = QUESTIONS.length;
+const PICK_DELAY = 5000; // ms between choosing a branch and the first question
 
 const STEPS = [
   { n: '١', text: 'اختر مجالك الدراسي' },
@@ -21,6 +22,8 @@ export default function Quiz() {
   const [phase, setPhase] = useState('intro'); // intro → branch → questions → result
   const [branch, setBranch] = useState(null);
   const [picked, setPicked] = useState(null); // branch tapped, while its animation plays
+  const [pickProgress, setPickProgress] = useState(0); // 0–100, drives the wait bar's aria value
+  const pickTimers = useRef({ timeout: null, interval: null });
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState(() => Array(TOTAL).fill(null));
   const headingRef = useRef(null);
@@ -51,17 +54,32 @@ export default function Quiz() {
     setPhase('intro');
   };
 
-  // play the "you picked this" animation, then move on to the questions
+  const clearPickTimers = () => {
+    window.clearTimeout(pickTimers.current.timeout);
+    window.clearInterval(pickTimers.current.interval);
+  };
+  useEffect(() => clearPickTimers, []);
+
+  const startQuestions = (b) => {
+    clearPickTimers();
+    setBranch(b);
+    setStep(0);
+    setPicked(null);
+    setPickProgress(0);
+    setPhase('questions');
+  };
+
+  // play the "you picked this" animation with a ~5s wait bar, then move on to the questions
   const pickBranch = (b) => {
     if (picked) return;
     setPicked(b);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.setTimeout(() => {
-      setBranch(b);
-      setStep(0);
-      setPicked(null);
-      setPhase('questions');
-    }, reduce ? 0 : 1300);
+    if (reduce) { startQuestions(b); return; }
+    const startedAt = Date.now();
+    pickTimers.current.interval = window.setInterval(() => {
+      setPickProgress(Math.min(100, Math.round(((Date.now() - startedAt) / PICK_DELAY) * 100)));
+    }, 250);
+    pickTimers.current.timeout = window.setTimeout(() => startQuestions(b), PICK_DELAY);
   };
 
   /* ---------- 1. ready? ---------- */
@@ -119,9 +137,25 @@ export default function Quiz() {
           })}
         </ul>
         {picked && (
-          <p className="pick-msg" role="status">
-            اخترت مجال «{picked.name}» — لنبدأ!
-          </p>
+          <div className="pick-wait">
+            <p className="pick-msg" role="status">
+              اخترت مجال «{picked.name}» — نجهّز أسئلتك…
+            </p>
+            {/* R4: mist@18% track, sand fill — fills over PICK_DELAY */}
+            <div
+              className="meter meter--from-end pick-progress"
+              role="progressbar"
+              aria-label="جارٍ تجهيز الاختبار"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={pickProgress}
+            >
+              <div className="meter__fill pick-progress__fill" style={{ animationDuration: `${PICK_DELAY}ms` }} />
+            </div>
+            <button type="button" className="btn tap pick-skip" onClick={() => startQuestions(picked)}>
+              ابدأ الآن
+            </button>
+          </div>
         )}
       </section>
     );

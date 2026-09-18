@@ -1,32 +1,156 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import MajorIcon from '../components/MajorIcon.jsx';
 import usePageTitle from '../components/usePageTitle.js';
-import { findBranch, findMajor } from '../data/majors.js';
+import { MAJOR_DETAILS, findBranch, findMajor } from '../data/majors.js';
+import { findUniversity } from '../data/universities.js';
 import NotFound from './NotFound.jsx';
 import './majors.css';
 
-// The Figma frame for a major page ("غرافيك ديزاين") is empty, so this is a holding page.
+const storageKey = (branch, id) => `suhail-comments-${branch}-${id}`;
+
+function loadComments(key) {
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function Comments({ branch, major }) {
+  const key = storageKey(branch.slug, major.id);
+  const [comments, setComments] = useState(() => loadComments(key));
+  const [name, setName] = useState('');
+  const [text, setText] = useState('');
+
+  useEffect(() => { setComments(loadComments(key)); }, [key]);
+
+  const submit = (e) => {
+    e.preventDefault();
+    const body = text.trim();
+    if (!body) return;
+    const next = [{ id: Date.now(), name: name.trim() || 'طالب', text: body, at: new Date().toISOString() }, ...comments];
+    setComments(next);
+    try { window.localStorage.setItem(key, JSON.stringify(next)); } catch { /* storage unavailable — keep in memory */ }
+    setText('');
+  };
+
+  // the box's backdrop: the major's own icon repeated across it
+  const tiles = major.icon ? Array.from({ length: 60 }, (_, i) => <MajorIcon key={i} name={major.icon} size={40} />) : null;
+
+  return (
+    <section className="panel comments" aria-labelledby="comments-title">
+      {tiles && <div className="comments__pattern" aria-hidden="true">{tiles}</div>}
+      <div className="comments__inner">
+        <h2 id="comments-title" className="comments__title">تعليقات</h2>
+        <p className="comments__lead">شارك تجربتك أو اسأل من درسوا هذا التخصص.</p>
+
+        <form className="comments__form" onSubmit={submit}>
+          <label className="field">
+            <span className="field__label">اسمك (اختياري)</span>
+            <input className="field__input" value={name} onChange={(e) => setName(e.target.value)} maxLength={40} />
+          </label>
+          <label className="field">
+            <span className="field__label">تعليقك</span>
+            <textarea className="field__input comments__textarea" value={text} onChange={(e) => setText(e.target.value)} rows={3} maxLength={600} required />
+          </label>
+          <button type="submit" className="btn btn--primary comments__submit" disabled={!text.trim()}>أضف تعليقك</button>
+        </form>
+
+        {comments.length === 0 ? (
+          <p className="comments__empty">لا تعليقات بعد — كن أول من يشارك تجربته.</p>
+        ) : (
+          <ul className="comments__list">
+            {comments.map((c) => (
+              <li key={c.id} className="comment">
+                <div className="comment__head">
+                  <span className="comment__name">{c.name}</span>
+                  <time className="comment__time" dateTime={c.at}>{new Date(c.at).toLocaleDateString('ar-SY')}</time>
+                </div>
+                <p className="comment__text">{c.text}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function MajorDetail() {
   const { branch: branchSlug, major: majorId } = useParams();
   const branch = findBranch(branchSlug);
   const major = findMajor(branchSlug, majorId);
   usePageTitle(major ? major.name : 'التخصصات');
   if (!branch || !major) return <NotFound />;
+  const d = MAJOR_DETAILS[major.id];
 
   return (
-    <div className="container page major-detail">
+    <article className="container page major-detail">
       <p className="major-detail__crumb text-secondary">
         <Link to={`/majors/${branch.slug}`} className="link">{branch.title}</Link>
         <Icon name="chevron-end" size={16} className="icon--sm" />
         <span>{major.section}</span>
       </p>
-      <h1 className="page__title">{major.name}</h1>
-      <div className="panel empty">
+      <header className="major-detail__head">
         {major.icon && <MajorIcon name={major.icon} size={56} />}
-        <p>المعلومات الكاملة عن هذا التخصص قيد الإعداد.</p>
-        <Link to={`/majors/${branch.slug}`} className="btn tap">العودة إلى {branch.title}</Link>
-      </div>
-    </div>
+        <h1 className="page__title">{major.name}</h1>
+      </header>
+
+      {d ? (
+        <>
+          <section aria-labelledby="about-title" className="major-detail__section">
+            <h2 id="about-title" className="section__title">تعريف الاختصاص</h2>
+            <p className="major-detail__about">{d.about}</p>
+          </section>
+
+          <div className="major-detail__pair">
+            <section aria-labelledby="req-title" className="panel major-detail__block">
+              <h2 id="req-title" className="major-detail__h">المؤهلات اللازمة لدراسة التخصص</h2>
+              <ul className="major-detail__list">
+                {d.requirements.map((r) => <li key={r}>{r}</li>)}
+              </ul>
+            </section>
+            <section aria-labelledby="jobs-title" className="panel major-detail__block">
+              <h2 id="jobs-title" className="major-detail__h">فرص العمل</h2>
+              <ul className="major-detail__list">
+                {d.careers.map((c) => <li key={c}>{c}</li>)}
+              </ul>
+            </section>
+          </div>
+
+          <section aria-labelledby="unis-title" className="major-detail__section">
+            <h2 id="unis-title" className="section__title">الجامعات التي تدرّس هذا الاختصاص</h2>
+            <ul className="major-detail__unis">
+              {d.universities.map((u) => {
+                const uni = findUniversity(u.slug);
+                if (!uni) return null;
+                return (
+                  <li key={u.slug}>
+                    <Link to={`/universities/${uni.slug}`} className="tap uni-row">
+                      <span className="uni-row__logo"><img src={uni.logo} alt="" /></span>
+                      <span className="uni-row__text">
+                        <span className="uni-row__name">{uni.name}</span>
+                        <span className="uni-row__faculty">{u.faculty}</span>
+                      </span>
+                      <Icon name="chevron-end" size={18} className="icon--sm" />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          <Comments branch={branch} major={major} />
+        </>
+      ) : (
+        <div className="panel empty">
+          <p>المعلومات الكاملة عن هذا التخصص قيد الإعداد.</p>
+          <Link to={`/majors/${branch.slug}`} className="btn tap">العودة إلى {branch.title}</Link>
+        </div>
+      )}
+    </article>
   );
 }

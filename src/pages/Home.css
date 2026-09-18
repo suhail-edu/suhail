@@ -25,9 +25,10 @@
 @media (min-width: 1024px) {
   .hero { padding-block: 72px 40px; text-align: start; }
   .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-  .hero__brand { display: flex; align-items: center; gap: 32px; }
-  .hero__mark { inline-size: 128px; block-size: 128px; margin: 0; flex: none; }
-  .hero__title { margin: 0; }
+  /* mark above the headline, as on mobile; the headline stays on one line */
+  .hero__brand { display: grid; justify-items: start; gap: 28px; }
+  .hero__mark { inline-size: 128px; block-size: 128px; margin: 0; }
+  .hero__title { margin: 0; white-space: nowrap; }
   .hero__copy { margin-inline: 0; justify-items: start; }
   .hero__copy p { max-inline-size: none; }
   .services { padding-block: 40px 24px; }

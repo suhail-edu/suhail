@@ -5,8 +5,8 @@
           mask-image: var(--icon-url);
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
-  -webkit-mask-size: var(--icon-size) auto;
-          mask-size: var(--icon-size) auto;
+  -webkit-mask-size: var(--icon-size);
+          mask-size: var(--icon-size);
   -webkit-mask-position: var(--icon-pos);
           mask-position: var(--icon-pos);
 }

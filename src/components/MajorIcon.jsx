@@ -2,6 +2,11 @@ import majorsSheet from '../../assets/majors.png';
 import majors2Sheet from '../generated/majors2-mask.png'; // assets/majors2.png with the dark dots cut out (npm run icons)
 import './MajorIcon.css';
 
+// Scientific-branch icons: Phosphor Icons "fill" weight (MIT, see src/icons/majors/LICENSE-phosphor.txt),
+// chosen to match the flat silhouettes of the arts sheets. Same mask pipeline, so the colour is a token.
+const SVG_ICONS = import.meta.glob('../icons/majors/*.svg', { eager: true, import: 'default', query: '?url' });
+const svgUrl = (id) => SVG_ICONS[`../icons/majors/${id}.svg`];
+
 // The two sprite sheets in /assets. Boxes were measured from the PNG alpha channel.
 // Icons are rendered through a CSS mask so the artwork is used as-is while the
 // colour comes from a token (majors2.png is green, which is outside the palette).
@@ -22,6 +27,11 @@ const ICONS = {
 };
 
 export default function MajorIcon({ name, size = 32 }) {
+  const url = svgUrl(name);
+  if (url) {
+    const style = { '--icon-url': `url("${url}")`, '--icon-size': 'contain', '--icon-pos': 'center', blockSize: `${size}px`, inlineSize: `${size}px` };
+    return <span className="major-icon" style={style} aria-hidden="true" />;
+  }
   const ic = ICONS[name];
   if (!ic) return null;
   const s = SHEETS[ic.sheet];
@@ -29,8 +39,8 @@ export default function MajorIcon({ name, size = 32 }) {
   const px = s.W === ic.w ? 0 : (ic.x / (s.W - ic.w)) * 100;
   const py = s.H === ic.h ? 0 : (ic.y / (s.H - ic.h)) * 100;
   const style = {
-    '--icon-url': `url(${s.url})`,
-    '--icon-size': `${(s.W / ic.w) * 100}%`,
+    '--icon-url': `url("${s.url}")`,
+    '--icon-size': `${(s.W / ic.w) * 100}% auto`,
     '--icon-pos': `${px}% ${py}%`,
     blockSize: `${size}px`,
     inlineSize: `${(size * ic.w) / ic.h}px`,

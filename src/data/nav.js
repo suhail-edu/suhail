@@ -29,11 +29,11 @@ export const FOOTER_GROUPS = [
   },
 ];
 
-// Social icon files are not in /assets yet — rendered as text links until they are.
+// Figma footer: Facebook, WhatsApp, Instagram (monochrome marks from BrandIcon). Set real hrefs.
 export const SOCIAL_LINKS = [
-  { href: '#', label: 'فيسبوك' },
-  { href: '#', label: 'واتساب' },
-  { href: '#', label: 'إنستغرام' },
+  { href: '#', icon: 'facebook', label: 'فيسبوك' },
+  { href: '#', icon: 'whatsapp', label: 'واتساب' },
+  { href: '#', icon: 'instagram', label: 'إنستغرام' },
 ];
 
 export const SOON_TITLES = {

@@ -20,7 +20,8 @@
   grid-template-rows: repeat(var(--rows, 3), auto);
   column-gap: 16px; row-gap: var(--tap-gap);
 }
-.footer__list--inline { display: flex; justify-content: center; gap: 24px; }
+.footer__list--inline { display: flex; justify-content: center; gap: 12px; }
+.footer__socialbtn { color: var(--c-mist); }
 
 .footer__link {
   display: flex; align-items: center; gap: 8px;
@@ -44,7 +45,7 @@
   .footer__groups { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px 40px; margin-block-start: 0; }
   .footer__list { grid-template-columns: auto auto; }
   .footer__link span { white-space: nowrap; }
-  .footer__list--inline { display: flex; flex-direction: column; justify-content: flex-start; gap: var(--tap-gap); }
+  .footer__list--inline { justify-content: flex-start; }
 }
 @media (min-width: 1440px) {
   .footer__inner { grid-template-columns: minmax(260px, .8fr) 2.6fr; gap: 48px; }

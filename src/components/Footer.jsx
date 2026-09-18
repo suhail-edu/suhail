@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Icon from './Icon.jsx';
+import BrandIcon from './BrandIcon.jsx';
 import { FOOTER_GROUPS, SOCIAL_LINKS } from '../data/nav.js';
 import './Footer.css';
 
@@ -31,7 +32,9 @@ export default function Footer() {
             <ul className="footer__list footer__list--inline">
               {SOCIAL_LINKS.map((s) => (
                 <li key={s.label}>
-                  <a href={s.href} className="footer__link">{s.label}</a>
+                  <a href={s.href} className="iconbtn footer__socialbtn" aria-label={s.label} title={s.label}>
+                    <BrandIcon name={s.icon} size={22} />
+                  </a>
                 </li>
               ))}
             </ul>

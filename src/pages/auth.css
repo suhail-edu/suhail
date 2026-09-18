@@ -6,7 +6,8 @@
 .auth__submit { margin-block-start: 4px; }
 .auth__social { display: flex; justify-content: center; gap: 12px; }
 .auth__social li { flex: 1 1 0; min-inline-size: 0; }
-.auth__social .btn { inline-size: 100%; min-inline-size: 0; padding-inline: 8px; }
+.auth__provider { inline-size: 100%; min-inline-size: 0; padding-inline: 8px; }
+.auth__provider .icon { color: var(--c-white); }
 @media (min-width: 600px) {
   .auth__social { gap: 22px; }
 }

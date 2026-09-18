@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import usePageTitle from '../components/usePageTitle.js';
+import BrandIcon, { PROVIDERS } from '../components/BrandIcon.jsx';
 import './auth.css';
 
-const PROVIDERS = ['Google', 'Facebook', 'Apple'];
 
 export default function Signup() {
   usePageTitle('إنشاء حساب');
@@ -57,8 +57,10 @@ export default function Signup() {
 
         <ul className="auth__social" aria-label="إنشاء حساب عبر">
           {PROVIDERS.map((p) => (
-            <li key={p}>
-              <button type="button" className="btn tap" lang="en">{p}</button>
+            <li key={p.id}>
+              <button type="button" className="btn tap auth__provider" aria-label={p.label}>
+                <BrandIcon name={p.id} />
+              </button>
             </li>
           ))}
         </ul>

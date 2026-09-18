@@ -1,49 +1,110 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/logo.png';
 import Icon from '../components/Icon.jsx';
 import Meter from '../components/Meter.jsx';
 import usePageTitle from '../components/usePageTitle.js';
 import { QUESTIONS, TRACKS, scoreAnswers } from '../data/quiz.js';
+import { BRANCHES } from '../data/majors.js';
 import './quiz.css';
 
 const TOTAL = QUESTIONS.length;
 
+const STEPS = [
+  { n: '١', text: 'اختر مجالك الدراسي' },
+  { n: '٢', text: `أجب عن ${TOTAL} أسئلة قصيرة` },
+  { n: '٣', text: 'اكتشف التخصصات الأنسب لك' },
+];
+
 export default function Quiz() {
   usePageTitle('اختبار تحديد الميول');
+  const [phase, setPhase] = useState('intro'); // intro → branch → questions → result
+  const [branch, setBranch] = useState(null);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState(() => Array(TOTAL).fill(null));
-  const [done, setDone] = useState(false);
   const headingRef = useRef(null);
 
-  // move focus to the question when it changes (screen readers + keyboard)
+  // move focus to the heading whenever the screen changes (screen readers + keyboard)
   useEffect(() => {
     headingRef.current?.focus();
-  }, [step, done]);
+  }, [phase, step]);
 
-  const choose = (i) => {
-    setAnswers((a) => a.map((v, qi) => (qi === step ? i : v)));
-  };
+  const choose = (i) => setAnswers((a) => a.map((v, qi) => (qi === step ? i : v)));
 
   const next = () => {
     if (answers[step] === null) return;
-    if (step === TOTAL - 1) setDone(true);
+    if (step === TOTAL - 1) setPhase('result');
     else setStep((s) => s + 1);
   };
 
   const back = () => {
-    if (done) { setDone(false); return; }
     if (step > 0) setStep((s) => s - 1);
+    else setPhase('branch');
   };
 
   const restart = () => {
     setAnswers(Array(TOTAL).fill(null));
     setStep(0);
-    setDone(false);
+    setBranch(null);
+    setPhase('intro');
   };
 
-  if (done) {
+  /* ---------- 1. ready? ---------- */
+  if (phase === 'intro') {
+    return (
+      <section className="container intro" aria-labelledby="intro-title">
+        <div className="panel intro__card">
+          <img className="intro__mark" src={logo} alt="" width="64" height="64" />
+          <h1 id="intro-title" className="intro__title" ref={headingRef} tabIndex={-1}>هل أنت جاهز؟</h1>
+          <p className="intro__lead">
+            لتأدية اختبار تحديد ميولك الأكاديمي واكتشاف شغفك الحقيقي
+          </p>
+          <ol className="intro__steps">
+            {STEPS.map((s) => (
+              <li key={s.n} className="intro__step">
+                <span className="intro__num" aria-hidden="true">{s.n}</span>
+                <span>{s.text}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="intro__note text-secondary">لا توجد إجابات صحيحة أو خاطئة — اختر ما يشبهك فعلاً. يستغرق الاختبار نحو دقيقتين.</p>
+          <div className="intro__actions">
+            <button type="button" className="btn btn--primary intro__cta" onClick={() => setPhase('branch')}>
+              أنا جاهز، لنبدأ
+            </button>
+            <Link to="/" className="btn tap">ليس الآن</Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* ---------- 2. choose a branch (Figma "مجال") ---------- */
+  if (phase === 'branch') {
+    return (
+      <section className="container page" aria-labelledby="branch-title">
+        <h1 id="branch-title" className="page__title" ref={headingRef} tabIndex={-1}>اختر المجال الذي تود التحقق منه</h1>
+        <ul className="branches__list">
+          {BRANCHES.map((b) => (
+            <li key={b.slug}>
+              <button
+                type="button"
+                className="tap row branch"
+                onClick={() => { setBranch(b); setStep(0); setPhase('questions'); }}
+              >
+                {b.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  }
+
+  /* ---------- 4. result (Figma "ex 9") ---------- */
+  if (phase === 'result') {
     const track = TRACKS[scoreAnswers(answers)];
-    const branchPath = `/majors/${track.branch}`;
+    const branchPath = `/majors/${branch?.slug || track.branch}`;
     return (
       <section className="container result" aria-labelledby="result-title">
         <div className="panel result__card">
@@ -68,13 +129,16 @@ export default function Quiz() {
     );
   }
 
+  /* ---------- 3. questions (Figma ex 1 → ex 8) ---------- */
   const q = QUESTIONS[step];
   const selected = answers[step];
 
   return (
     <section className="container quiz" aria-labelledby="quiz-question">
       <Meter className="quiz__meter" value={step + 1} max={TOTAL} label="تقدم الاختبار" fromEnd />
-      <p className="quiz__count">السؤال {step + 1} من {TOTAL}</p>
+      <p className="quiz__count">
+        السؤال {step + 1} من {TOTAL}{branch && <> · المجال: {branch.name}</>}
+      </p>
       <h1 id="quiz-question" className="quiz__question" ref={headingRef} tabIndex={-1}>{q.text}</h1>
 
       <div className="quiz__options" role="radiogroup" aria-labelledby="quiz-question">
@@ -97,7 +161,7 @@ export default function Quiz() {
       </div>
 
       <div className="quiz__nav">
-        <button type="button" className="btn tap" onClick={back} disabled={step === 0}>
+        <button type="button" className="btn tap" onClick={back}>
           <Icon name="chevron-end" size={16} className="icon--sm" />
           <span>رجوع</span>
         </button>

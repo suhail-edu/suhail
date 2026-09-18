@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import usePageTitle from '../components/usePageTitle.js';
+import BrandIcon, { PROVIDERS } from '../components/BrandIcon.jsx';
 import './auth.css';
 
-// Provider names are provisional — the Figma shows three unlabelled "Social Icons".
-const PROVIDERS = ['Google', 'Facebook', 'Apple'];
 
 export default function Login() {
   usePageTitle('تسجيل الدخول');
@@ -37,8 +36,10 @@ export default function Login() {
 
         <ul className="auth__social" aria-label="تسجيل الدخول عبر">
           {PROVIDERS.map((p) => (
-            <li key={p}>
-              <button type="button" className="btn tap" lang="en">{p}</button>
+            <li key={p.id}>
+              <button type="button" className="btn tap auth__provider" aria-label={p.label}>
+                <BrandIcon name={p.id} />
+              </button>
             </li>
           ))}
         </ul>

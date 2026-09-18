@@ -73,3 +73,36 @@
   .intro__card { padding: 56px 48px; }
   .intro__mark { inline-size: 88px; block-size: 88px; }
 }
+
+/* ---- picking a branch: the tapped row becomes the selected card, a sand ring pulses out,
+   the check draws itself, the other rows fade away, then the questions slide in ---- */
+.branch { position: relative; transition: background-color var(--dur-press), color var(--dur-press), transform 300ms cubic-bezier(.2,.8,.2,1); }
+.branch.is-picked,
+.branch.is-picked:active { background: var(--c-white); color: var(--c-ground); animation: pick-pop 480ms cubic-bezier(.2,.8,.2,1); }
+@media (hover: hover) { .branch.is-picked:hover { background: var(--c-white); } }
+.branch.is-picked::after {
+  content: ''; position: absolute; inset: -5px; border-radius: inherit; pointer-events: none;
+  border: 2px solid var(--c-sand);
+  animation: pick-ring 900ms ease-out forwards;
+}
+.branch__check { position: absolute; inset-inline-start: 18px; inset-block-start: calc(50% - 12px); color: var(--c-ground); }
+.branch__check path { stroke-dasharray: 24; stroke-dashoffset: 24; animation: draw-check 380ms 120ms ease-out forwards; }
+.branches__list.is-picking li:not(.is-picked-item) { animation: fade-away 420ms ease forwards; pointer-events: none; }
+.pick-msg {
+  text-align: center; color: var(--c-white); font-weight: 700; font-size: var(--fs-lg);
+  margin-block-start: 28px; animation: rise 420ms 260ms cubic-bezier(.2,.8,.2,1) both;
+}
+.quiz__enter { animation: rise 420ms cubic-bezier(.2,.8,.2,1) both; }
+.quiz__enter--late { animation-delay: 120ms; }
+
+@keyframes pick-pop { 0% { transform: scale(1); } 40% { transform: scale(1.04); } 100% { transform: scale(1); } }
+@keyframes pick-ring { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(1.1); } }
+@keyframes draw-check { to { stroke-dashoffset: 0; } }
+@keyframes fade-away { to { opacity: 0; transform: translateY(10px) scale(.96); } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .branch.is-picked, .branch.is-picked::after, .branch__check path,
+  .branches__list.is-picking li:not(.is-picked-item), .pick-msg, .quiz__enter { animation: none; }
+  .branch__check path { stroke-dashoffset: 0; }
+}

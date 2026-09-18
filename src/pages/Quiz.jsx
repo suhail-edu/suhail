@@ -20,6 +20,7 @@ export default function Quiz() {
   usePageTitle('اختبار تحديد الميول');
   const [phase, setPhase] = useState('intro'); // intro → branch → questions → result
   const [branch, setBranch] = useState(null);
+  const [picked, setPicked] = useState(null); // branch tapped, while its animation plays
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState(() => Array(TOTAL).fill(null));
   const headingRef = useRef(null);
@@ -46,7 +47,21 @@ export default function Quiz() {
     setAnswers(Array(TOTAL).fill(null));
     setStep(0);
     setBranch(null);
+    setPicked(null);
     setPhase('intro');
+  };
+
+  // play the "you picked this" animation, then move on to the questions
+  const pickBranch = (b) => {
+    if (picked) return;
+    setPicked(b);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.setTimeout(() => {
+      setBranch(b);
+      setStep(0);
+      setPicked(null);
+      setPhase('questions');
+    }, reduce ? 0 : 1300);
   };
 
   /* ---------- 1. ready? ---------- */
@@ -82,21 +97,32 @@ export default function Quiz() {
   /* ---------- 2. choose a branch (Figma "مجال") ---------- */
   if (phase === 'branch') {
     return (
-      <section className="container page" aria-labelledby="branch-title">
+      <section className="container page branch-pick" aria-labelledby="branch-title" aria-live="polite">
         <h1 id="branch-title" className="page__title" ref={headingRef} tabIndex={-1}>اختر المجال الذي تود التحقق منه</h1>
-        <ul className="branches__list">
-          {BRANCHES.map((b) => (
-            <li key={b.slug}>
-              <button
-                type="button"
-                className="tap row branch"
-                onClick={() => { setBranch(b); setStep(0); setPhase('questions'); }}
-              >
-                {b.name}
-              </button>
-            </li>
-          ))}
+        <ul className={`branches__list ${picked ? 'is-picking' : ''}`}>
+          {BRANCHES.map((b) => {
+            const isPicked = picked?.slug === b.slug;
+            return (
+              <li key={b.slug} className={isPicked ? 'is-picked-item' : ''}>
+                <button
+                  type="button"
+                  className={`tap row branch ${isPicked ? 'is-picked' : ''}`}
+                  aria-pressed={isPicked}
+                  disabled={picked && !isPicked}
+                  onClick={() => pickBranch(b)}
+                >
+                  {isPicked && <Icon name="check" className="branch__check" />}
+                  <span>{b.name}</span>
+                </button>
+              </li>
+            );
+          })}
         </ul>
+        {picked && (
+          <p className="pick-msg" role="status">
+            اخترت مجال «{picked.name}» — لنبدأ!
+          </p>
+        )}
       </section>
     );
   }
@@ -134,14 +160,14 @@ export default function Quiz() {
   const selected = answers[step];
 
   return (
-    <section className="container quiz" aria-labelledby="quiz-question">
+    <section className="container quiz" aria-labelledby="quiz-question" key={step}>
       <Meter className="quiz__meter" value={step + 1} max={TOTAL} label="تقدم الاختبار" fromEnd />
       <p className="quiz__count">
         السؤال {step + 1} من {TOTAL}{branch && <> · المجال: {branch.name}</>}
       </p>
-      <h1 id="quiz-question" className="quiz__question" ref={headingRef} tabIndex={-1}>{q.text}</h1>
+      <h1 id="quiz-question" className="quiz__question quiz__enter" ref={headingRef} tabIndex={-1}>{q.text}</h1>
 
-      <div className="quiz__options" role="radiogroup" aria-labelledby="quiz-question">
+      <div className="quiz__options quiz__enter quiz__enter--late" role="radiogroup" aria-labelledby="quiz-question">
         {q.options.map((opt, i) => {
           const isSel = selected === i;
           return (

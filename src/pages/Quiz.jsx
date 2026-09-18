@@ -174,7 +174,7 @@ export default function Quiz() {
     <section className="container quiz" aria-labelledby="quiz-question" key={step}>
       <Meter className="quiz__meter" value={step + 1} max={TOTAL} label="تقدم الاختبار" fromEnd />
       <p className="quiz__count">
-        السؤال {step + 1} من {TOTAL}{branch && <> · المجال: {branch.name}</>}
+        السؤال {step + 1} من {TOTAL}{branch && <>، مجال {branch.name}</>}
       </p>
       <h1 id="quiz-question" className="quiz__question quiz__enter" ref={headingRef} tabIndex={-1}>{q.text}</h1>
 

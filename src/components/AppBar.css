@@ -9,7 +9,7 @@
 .appbar__brand {
   display: inline-flex; align-items: center; gap: 10px;
   min-block-size: var(--tap); padding-inline-end: 4px;
-  color: var(--c-white); text-decoration: none; font-weight: 700; font-size: var(--fs-lg);
+  color: var(--c-white); text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: var(--fs-xl);
   transition: transform var(--dur-press);
 }
 .appbar__brand img { inline-size: 28px; block-size: 28px; }
@@ -21,7 +21,7 @@
 .navlink {
   display: flex; align-items: center;
   min-block-size: var(--tap); padding-inline: 12px; padding-block-start: 3px;
-  color: var(--c-mist); text-decoration: none; font-weight: 500;
+  color: var(--c-mist); text-decoration: none; font-family: var(--font-display); font-weight: 500; font-size: var(--fs-lg);
   border-block-end: 3px solid transparent;   /* §3: active tab underline = blue */
   transition: color var(--dur-press), transform var(--dur-press);
 }

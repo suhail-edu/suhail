@@ -41,7 +41,7 @@ export default function Search() {
               <li key={`${m.branch}-${m.id}`}>
                 <Link to={`/majors/${m.branch}/${m.id}`} className="tap row search__row">
                   <span>{m.name}</span>
-                  <span className="search__meta">{m.branchName} · {m.section}</span>
+                  <span className="search__meta">{m.section} ({m.branchName})</span>
                 </Link>
               </li>
             ))}

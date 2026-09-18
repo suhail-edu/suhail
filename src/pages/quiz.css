@@ -94,10 +94,8 @@
   animation: rise 420ms 260ms cubic-bezier(.2,.8,.2,1) both;
 }
 .pick-msg { text-align: center; color: var(--c-white); font-weight: 700; font-size: var(--fs-lg); }
-.pick-progress { inline-size: 100%; }
-.pick-progress__fill { inline-size: 0; transition: none; animation: pick-fill linear forwards; animation-delay: 300ms; }
-.pick-skip { min-inline-size: 140px; }
-@keyframes pick-fill { from { inline-size: 0; } to { inline-size: 100%; } }
+.pick-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.pick-start { min-inline-size: 180px; }
 .quiz__enter { animation: rise 420ms cubic-bezier(.2,.8,.2,1) both; }
 .quiz__enter--late { animation-delay: 120ms; }
 

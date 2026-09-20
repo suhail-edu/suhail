@@ -43,9 +43,12 @@ const SIZE = 256;
 
   const save = (name, dataUrl) => fs.writeFileSync(path.join(out, `${name}.png`), Buffer.from(dataUrl.split(',')[1], 'base64'));
   const toDataUrl = (file) => {
-    const ext = path.extname(file).slice(1);
-    const mime = ext === 'svg' ? 'image/svg+xml' : 'image/png';
-    return `data:${mime};base64,${fs.readFileSync(file).toString('base64')}`;
+    if (file.endsWith('.svg')) {
+      // a viewBox-only SVG has no intrinsic size in the browser (defaults to 300×150) — give it one
+      const svg = fs.readFileSync(file, 'utf8').replace('<svg ', `<svg width="${SIZE}" height="${SIZE}" `);
+      return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+    }
+    return `data:image/png;base64,${fs.readFileSync(file).toString('base64')}`;
   };
 
   for (const [name, s] of Object.entries(SPRITES)) save(name, await render(toDataUrl(path.join(root, s.file)), s));

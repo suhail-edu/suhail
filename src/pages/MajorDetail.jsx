@@ -59,43 +59,51 @@ function Comments({ branch, major }) {
     </span>
   )) : null;
 
+  const all = [...comments, ...SEED_COMMENTS];
+  const initial = (n) => (n || 'ط').trim().charAt(0);
+
   return (
     <section className="panel comments" aria-labelledby="comments-title">
       {tiles && <div className="comments__pattern" aria-hidden="true">{tiles}</div>}
       <div className="comments__inner">
-        <h2 id="comments-title" className="comments__title">تعليقات</h2>
+        <header className="comments__head">
+          <h2 id="comments-title" className="comments__title">تعليقات</h2>
+          <span className="comments__count">{all.length}</span>
+        </header>
         <p className="comments__lead">شارك تجربتك أو اسأل من درسوا هذا التخصص.</p>
 
-        <form className="comments__form" onSubmit={submit}>
-          <label className="field">
-            <span className="field__label">اسمك (اختياري)</span>
-            <input className="field__input" value={name} onChange={(e) => setName(e.target.value)} maxLength={40} />
-          </label>
-          <label className="field">
-            <span className="field__label">تعليقك</span>
-            <textarea className="field__input comments__textarea" value={text} onChange={(e) => setText(e.target.value)} rows={3} maxLength={600} required />
-          </label>
-          <button type="submit" className="btn btn--primary comments__submit" disabled={!text.trim()}>أضف تعليقك</button>
+        <form className="composer" onSubmit={submit}>
+          <span className="avatar avatar--me" aria-hidden="true">{initial(name)}</span>
+          <div className="composer__fields">
+            <label className="sr-only" htmlFor="comment-name">اسمك (اختياري)</label>
+            <input id="comment-name" className="composer__name" value={name} onChange={(e) => setName(e.target.value)} maxLength={40} placeholder="اسمك (اختياري)" />
+            <label className="sr-only" htmlFor="comment-text">تعليقك</label>
+            <textarea id="comment-text" className="field__input composer__text" value={text} onChange={(e) => setText(e.target.value)} rows={3} maxLength={600} placeholder="اكتب تعليقك هنا…" required />
+            <div className="composer__bar">
+              <span className="composer__hint">{text.length ? `${text.length} / 600` : ''}</span>
+              <button type="submit" className="btn btn--primary" disabled={!text.trim()}>نشر التعليق</button>
+            </div>
+          </div>
         </form>
 
-        {(() => {
-          const all = [...comments, ...SEED_COMMENTS];
-          return all.length === 0 ? (
+        {all.length === 0 ? (
           <p className="comments__empty">لا تعليقات بعد — كن أول من يشارك تجربته.</p>
         ) : (
-          <ul className="comments__list">
+          <ol className="thread">
             {all.map((c) => (
-              <li key={c.id} className="comment">
-                <div className="comment__head">
-                  <span className="comment__name">{c.name}</span>
-                  <time className="comment__time" dateTime={c.at}>{new Date(c.at).toLocaleDateString('ar-SY')}</time>
+              <li key={c.id} className="thread__item">
+                <span className="avatar" aria-hidden="true">{initial(c.name)}</span>
+                <div className="thread__body">
+                  <div className="thread__meta">
+                    <span className="thread__name">{c.name}</span>
+                    <time className="thread__time" dateTime={c.at}>{new Date(c.at).toLocaleDateString('ar-SY', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                  </div>
+                  <p className="thread__text">{c.text}</p>
                 </div>
-                <p className="comment__text">{c.text}</p>
               </li>
             ))}
-          </ul>
-        );
-        })()}
+          </ol>
+        )}
       </div>
     </section>
   );

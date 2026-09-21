@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import MajorIcon from '../components/MajorIcon.jsx';
+import StarrySky from '../components/StarrySky.jsx';
 import usePageTitle from '../components/usePageTitle.js';
 import { MAJOR_DETAILS, findBranch, findMajor } from '../data/majors.js';
 import { findUniversity } from '../data/universities.js';
@@ -9,27 +10,6 @@ import NotFound from './NotFound.jsx';
 import './majors.css';
 
 const storageKey = (branch, id) => `suhail-comments-${branch}-${id}`;
-
-// Icons on a loose grid: every cell gets one icon, nudged and tilted a little (seeded, so it
-// lands the same way on every render). Scattered, but never piled up.
-function scatter(seedText, cols = 8, rows = 7) {
-  let seed = 0;
-  for (const ch of seedText) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
-  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 2 ** 32; };
-  const out = [];
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const shift = r % 2 ? 0.5 : 0; // stagger alternate rows like a brick pattern
-      out.push({
-        x: ((c + shift + 0.5) / cols) * 100 + (rnd() - 0.5) * 4,
-        y: ((r + 0.5) / rows) * 100 + (rnd() - 0.5) * 6,
-        r: (rnd() - 0.5) * 40,
-        s: 34 + rnd() * 10,
-      });
-    }
-  }
-  return out;
-}
 
 // Seed comments shown on every major until real ones exist.
 const SEED_COMMENTS = [
@@ -63,16 +43,9 @@ function Comments({ branch, major }) {
     setText('');
   };
 
-  // the box's backdrop: the major's own icon scattered across it (seeded, so it doesn't jump between renders)
-  const tiles = major.icon ? scatter(major.id).map((t, i) => (
-    <span key={i} className="comments__tile" style={{ insetInlineStart: `${t.x}%`, insetBlockStart: `${t.y}%`, transform: `translate(50%, -50%) rotate(${t.r}deg)` }}>
-      <MajorIcon name={major.icon} size={t.s} />
-    </span>
-  )) : null;
-
   return (
     <section className="panel comments" aria-labelledby="comments-title">
-      {tiles && <div className="comments__pattern" aria-hidden="true">{tiles}</div>}
+      <div className="comments__sky" aria-hidden="true"><StarrySky seed={major.id} /></div>
       <div className="comments__inner">
         <h2 id="comments-title" className="comments__title">تعليقات</h2>
         <p className="comments__lead">شارك تجربتك أو اسأل من درسوا هذا التخصص.</p>

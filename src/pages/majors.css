@@ -46,23 +46,21 @@
 .uni-row__faculty { color: var(--c-mist); font-size: var(--fs-sm); }
 .uni-row .icon { color: var(--c-white); }
 
-/* ---- comments: the major's icon tiled behind the box ---- */
-.comments { position: relative; overflow: hidden; margin-block-start: 32px; padding: 24px 20px; }
-.comments__pattern { position: absolute; inset: 0; opacity: .12; pointer-events: none; }  /* mist @ 12% — decoration only */
-.comments__tile { position: absolute; }
-.comments__pattern .major-icon { background-color: var(--c-mist); }
+/* ---- comments: a painted night sky behind the box (see StarrySky) ---- */
+.comments { position: relative; overflow: hidden; margin-block-start: 32px; padding: 24px 20px; background: var(--c-ground); }
+.comments__sky { position: absolute; inset: 0; }
 .comments__inner { position: relative; display: grid; gap: 16px; }
 .comments__title { font-size: var(--fs-2xl); }
 .comments__lead { color: var(--c-mist); }
 .comments__form { display: grid; gap: 14px; }
 .comments__textarea { min-block-size: 96px; padding-block: 10px; resize: vertical; font: inherit; line-height: 1.6; }
 .comments__submit { justify-self: start; }
-.comments__empty { color: var(--c-text-secondary); text-align: center; padding-block: 12px; } /* on surface */
+.comments__empty { color: var(--c-text-secondary); text-align: center; padding-block: 12px; } /* on ground */
 .comments__list { display: grid; gap: 10px; }
-.comment { background: var(--c-ground); border: 1px solid var(--c-hairline); border-radius: var(--radius-ctl); padding: 12px 14px; }
+.comment { background: var(--c-surface); border: 1px solid var(--c-hairline); box-shadow: var(--shadow-rest); border-radius: var(--radius-ctl); padding: 12px 14px; }
 .comment__head { display: flex; justify-content: space-between; gap: 12px; margin-block-end: 6px; }
 .comment__name { color: var(--c-white); font-weight: 700; }
-.comment__time { color: var(--c-text-secondary); font-size: var(--fs-sm); } /* on ground */
+.comment__time { color: var(--c-text-secondary); font-size: var(--fs-sm); } /* on surface */
 .comment__text { line-height: 1.7; overflow-wrap: anywhere; }
 
 @media (min-width: 1024px) {

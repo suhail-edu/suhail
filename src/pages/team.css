@@ -10,9 +10,18 @@
 .member__role { color: var(--c-mist); }
 
 .team__tools { display: grid; gap: 12px; }
-.tool { padding: 14px 4px; border-block-start: 1px solid var(--c-hairline); }
+.tool { display: flex; align-items: center; gap: 16px; padding: 16px 4px; border-block-start: 1px solid var(--c-hairline); }
+.tool__logo {
+  flex: none; inline-size: 56px; block-size: 56px; border-radius: var(--radius-ctl);
+  background: var(--c-white); display: grid; place-items: center; overflow: hidden;
+  border: 1px solid var(--c-hairline); transition: transform var(--dur-press);
+}
+.tool__logo img { inline-size: 40px; block-size: 40px; object-fit: contain; }
+.tool__logo:active { transform: scale(.95); }
+.tool__mark { color: var(--c-ground); font-weight: 700; font-size: var(--fs-2xl); }
+.tool__body { flex: 1; min-inline-size: 0; }
 .tool__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.tool__name { color: var(--c-white); font-weight: 700; font-size: var(--fs-lg); }
+.tool__name { font-weight: 700; font-size: var(--fs-lg); }
 .tool__by { color: var(--c-text-secondary); font-size: var(--fs-sm); } /* on ground */
 .tool__note { margin-block-start: 4px; }
 

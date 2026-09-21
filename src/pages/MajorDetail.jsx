@@ -10,14 +10,25 @@ import './majors.css';
 
 const storageKey = (branch, id) => `suhail-comments-${branch}-${id}`;
 
-// Tiny seeded generator so the scattered icons land in the same places every render.
-function scatter(seedText, count) {
+// Icons on a loose grid: every cell gets one icon, nudged and tilted a little (seeded, so it
+// lands the same way on every render). Scattered, but never piled up.
+function scatter(seedText, cols = 8, rows = 7) {
   let seed = 0;
   for (const ch of seedText) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
   const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 2 ** 32; };
-  return Array.from({ length: count }, () => ({
-    x: rnd() * 100, y: rnd() * 100, r: rnd() * 60 - 30, s: 26 + rnd() * 34, o: 0.5 + rnd() * 0.5,
-  }));
+  const out = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const shift = r % 2 ? 0.5 : 0; // stagger alternate rows like a brick pattern
+      out.push({
+        x: ((c + shift + 0.5) / cols) * 100 + (rnd() - 0.5) * 4,
+        y: ((r + 0.5) / rows) * 100 + (rnd() - 0.5) * 6,
+        r: (rnd() - 0.5) * 40,
+        s: 34 + rnd() * 10,
+      });
+    }
+  }
+  return out;
 }
 
 // Seed comments shown on every major until real ones exist.
@@ -53,57 +64,49 @@ function Comments({ branch, major }) {
   };
 
   // the box's backdrop: the major's own icon scattered across it (seeded, so it doesn't jump between renders)
-  const tiles = major.icon ? scatter(major.id, 34).map((t, i) => (
-    <span key={i} className="comments__tile" style={{ insetInlineStart: `${t.x}%`, insetBlockStart: `${t.y}%`, transform: `rotate(${t.r}deg)`, opacity: t.o }}>
+  const tiles = major.icon ? scatter(major.id).map((t, i) => (
+    <span key={i} className="comments__tile" style={{ insetInlineStart: `${t.x}%`, insetBlockStart: `${t.y}%`, transform: `translate(50%, -50%) rotate(${t.r}deg)` }}>
       <MajorIcon name={major.icon} size={t.s} />
     </span>
   )) : null;
-
-  const all = [...comments, ...SEED_COMMENTS];
-  const initial = (n) => (n || 'ط').trim().charAt(0);
 
   return (
     <section className="panel comments" aria-labelledby="comments-title">
       {tiles && <div className="comments__pattern" aria-hidden="true">{tiles}</div>}
       <div className="comments__inner">
-        <header className="comments__head">
-          <h2 id="comments-title" className="comments__title">تعليقات</h2>
-          <span className="comments__count">{all.length}</span>
-        </header>
+        <h2 id="comments-title" className="comments__title">تعليقات</h2>
         <p className="comments__lead">شارك تجربتك أو اسأل من درسوا هذا التخصص.</p>
 
-        <form className="composer" onSubmit={submit}>
-          <span className="avatar avatar--me" aria-hidden="true">{initial(name)}</span>
-          <div className="composer__fields">
-            <label className="sr-only" htmlFor="comment-name">اسمك (اختياري)</label>
-            <input id="comment-name" className="composer__name" value={name} onChange={(e) => setName(e.target.value)} maxLength={40} placeholder="اسمك (اختياري)" />
-            <label className="sr-only" htmlFor="comment-text">تعليقك</label>
-            <textarea id="comment-text" className="field__input composer__text" value={text} onChange={(e) => setText(e.target.value)} rows={3} maxLength={600} placeholder="اكتب تعليقك هنا…" required />
-            <div className="composer__bar">
-              <span className="composer__hint">{text.length ? `${text.length} / 600` : ''}</span>
-              <button type="submit" className="btn btn--primary" disabled={!text.trim()}>نشر التعليق</button>
-            </div>
-          </div>
+        <form className="comments__form" onSubmit={submit}>
+          <label className="field">
+            <span className="field__label">اسمك (اختياري)</span>
+            <input className="field__input" value={name} onChange={(e) => setName(e.target.value)} maxLength={40} />
+          </label>
+          <label className="field">
+            <span className="field__label">تعليقك</span>
+            <textarea className="field__input comments__textarea" value={text} onChange={(e) => setText(e.target.value)} rows={3} maxLength={600} required />
+          </label>
+          <button type="submit" className="btn btn--primary comments__submit" disabled={!text.trim()}>أضف تعليقك</button>
         </form>
 
-        {all.length === 0 ? (
+        {(() => {
+          const all = [...comments, ...SEED_COMMENTS];
+          return all.length === 0 ? (
           <p className="comments__empty">لا تعليقات بعد — كن أول من يشارك تجربته.</p>
         ) : (
-          <ol className="thread">
+          <ul className="comments__list">
             {all.map((c) => (
-              <li key={c.id} className="thread__item">
-                <span className="avatar" aria-hidden="true">{initial(c.name)}</span>
-                <div className="thread__body">
-                  <div className="thread__meta">
-                    <span className="thread__name">{c.name}</span>
-                    <time className="thread__time" dateTime={c.at}>{new Date(c.at).toLocaleDateString('ar-SY', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-                  </div>
-                  <p className="thread__text">{c.text}</p>
+              <li key={c.id} className="comment">
+                <div className="comment__head">
+                  <span className="comment__name">{c.name}</span>
+                  <time className="comment__time" dateTime={c.at}>{new Date(c.at).toLocaleDateString('ar-SY')}</time>
                 </div>
+                <p className="comment__text">{c.text}</p>
               </li>
             ))}
-          </ol>
-        )}
+          </ul>
+        );
+        })()}
       </div>
     </section>
   );

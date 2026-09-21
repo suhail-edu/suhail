@@ -35,4 +35,4 @@ Requires Node 18+.
 - **States.** Every tappable element has rest, hover (inside `@media (hover: hover)`), pressed, focus and disabled, all derived from `design colors.md` §6.
 - **Accent budget.** One sand primary action per screen, at most three further sand marks.
 
-Routing uses `BrowserRouter`; a static host needs an SPA fallback to `index.html`.
+Routing uses `BrowserRouter`. Netlify is configured in `netlify.toml` (build `npm run build`, publish `dist`, SPA redirect); any other static host needs the same fallback to `index.html`.

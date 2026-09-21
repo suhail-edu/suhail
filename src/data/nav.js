@@ -24,7 +24,7 @@ export const FOOTER_GROUPS = [
     links: [
       { to: '/soon/privacy', label: 'سياسة الخصوصية' },
       { to: '/soon/about', label: 'من نحن' },
-      { to: '/soon/team', label: 'فريق العمل' },
+      { to: '/team', label: 'فريق العمل' },
     ],
   },
 ];

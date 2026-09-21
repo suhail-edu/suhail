@@ -26,6 +26,14 @@ button, input { font: inherit; color: inherit; }
 button { cursor: pointer; }
 a { color: var(--c-sand); }
 
+/* text selection and the scrollbar carry the mark's colour */
+::selection { background: var(--c-sand); color: var(--c-ground); }
+html { scrollbar-color: var(--c-sand) var(--c-surface); }
+::-webkit-scrollbar { inline-size: 12px; block-size: 12px; }
+::-webkit-scrollbar-track { background: var(--c-surface); }
+::-webkit-scrollbar-thumb { background: var(--c-sand); border-radius: var(--radius-pill); border: 3px solid var(--c-surface); }
+::-webkit-scrollbar-thumb:hover { background: var(--c-white); }
+
 /* §6 focus: 2px sand outline, 3px offset — everything, everywhere */
 :focus-visible { outline: 2px solid var(--c-sand); outline-offset: 3px; }
 

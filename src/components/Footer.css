@@ -36,8 +36,20 @@
 }
 .footer__link:active { color: var(--c-white); transform: translateY(1px); }
 
+/* bottom line: hairline, then the copyright and a small sign-off */
+.footer__bottom {
+  margin-block-start: 36px; padding-block-start: 20px;
+  border-block-start: 1px solid var(--c-hairline);
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 24px;
+  color: var(--c-text-secondary); font-size: var(--fs-sm);   /* mist @62% on surface: 5.23:1 */
+}
+.footer__copy { display: inline-flex; align-items: center; gap: 8px; }
+.footer__copy img { inline-size: 18px; block-size: 18px; }
+.footer__made { color: var(--c-text-secondary); }
+
 @media (min-width: 1024px) {
   .footer { margin-block-start: 64px; }
+  .footer__bottom { grid-column: 1 / -1; justify-content: space-between; }
   /* §8: link groups side by side in one row; the tagline sits above them until there is
      room for it beside them (≥1440). Lists size to content so nothing overflows. */
   .footer__inner { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: start; }

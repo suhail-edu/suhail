@@ -46,11 +46,8 @@
 .uni-row__faculty { color: var(--c-mist); font-size: var(--fs-sm); }
 .uni-row .icon { color: var(--c-white); }
 
-/* ---- comments: the major's icon tiled behind the box ---- */
-.comments { position: relative; overflow: hidden; margin-block-start: 32px; padding: 24px 20px; }
-.comments__pattern { position: absolute; inset: 0; opacity: .14; pointer-events: none; }  /* mist @ ≤14% — decoration only */
-.comments__tile { position: absolute; margin: -20px; }
-.comments__pattern .major-icon { background-color: var(--c-mist); }
+/* ---- comments ---- */
+.comments { margin-block-start: 32px; padding: 24px 20px; }
 .comments__inner { position: relative; display: grid; gap: 16px; }
 .comments__title { font-size: var(--fs-2xl); }
 .comments__lead { color: var(--c-mist); }

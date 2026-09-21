@@ -10,6 +10,7 @@ import MajorDetail from './pages/MajorDetail.jsx';
 import Universities from './pages/Universities.jsx';
 import University from './pages/University.jsx';
 import Search from './pages/Search.jsx';
+import Team from './pages/Team.jsx';
 import ComingSoon from './pages/ComingSoon.jsx';
 import NotFound from './pages/NotFound.jsx';
 
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="universities" element={<Universities />} />
           <Route path="universities/:slug" element={<University />} />
           <Route path="graduates" element={<ComingSoon title="تجارب الخريجين" />} />
+          <Route path="team" element={<Team />} />
           <Route path="soon/:slug" element={<ComingSoon />} />
           <Route path="search" element={<Search />} />
           <Route path="*" element={<NotFound />} />

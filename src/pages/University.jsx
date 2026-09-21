@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import usePageTitle from '../components/usePageTitle.js';
-import { findUniversity } from '../data/universities.js';
+import { coverFor, findUniversity } from '../data/universities.js';
 import NotFound from './NotFound.jsx';
 import './universities.css';
 
@@ -9,14 +9,16 @@ export default function University() {
   const u = findUniversity(slug);
   usePageTitle(u ? u.name : 'الجامعات');
   if (!u) return <NotFound />;
+  const cover = coverFor(u.slug);
 
   return (
     <article className="container page uni">
-      <header>
-        <div className="panel uni__head">
-          <h1>{u.name}</h1>
+      <header className="uni__header">
+        <div className={`panel uni__banner ${cover ? 'has-cover' : ''}`}>
+          {cover && <img className="uni__cover" src={cover} alt={`حرم ${u.name}`} />}
         </div>
         <div className="uni__logo"><img src={u.logo} alt={`شعار ${u.name}`} /></div>
+        <h1 className="uni__name">{u.name}</h1>
       </header>
 
       <div className="uni__body">

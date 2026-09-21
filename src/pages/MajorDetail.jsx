@@ -10,16 +10,6 @@ import './majors.css';
 
 const storageKey = (branch, id) => `suhail-comments-${branch}-${id}`;
 
-// Tiny seeded generator so the scattered icons land in the same places every render.
-function scatter(seedText, count) {
-  let seed = 0;
-  for (const ch of seedText) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
-  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 2 ** 32; };
-  return Array.from({ length: count }, () => ({
-    x: rnd() * 100, y: rnd() * 100, r: rnd() * 60 - 30, s: 26 + rnd() * 34, o: 0.5 + rnd() * 0.5,
-  }));
-}
-
 // Seed comments shown on every major until real ones exist.
 const SEED_COMMENTS = [
   { id: 'seed-1', name: 'نضال', text: 'تخرجت من سنتين وعم اشتغل فريلانس مع عملاء برا. السوق طالب كتير، خصوصاً الموشن غرافيك.', at: '2026-08-21T14:15:00Z' },
@@ -52,16 +42,8 @@ function Comments({ branch, major }) {
     setText('');
   };
 
-  // the box's backdrop: the major's own icon scattered across it (seeded, so it doesn't jump between renders)
-  const tiles = major.icon ? scatter(major.id, 34).map((t, i) => (
-    <span key={i} className="comments__tile" style={{ insetInlineStart: `${t.x}%`, insetBlockStart: `${t.y}%`, transform: `rotate(${t.r}deg)`, opacity: t.o }}>
-      <MajorIcon name={major.icon} size={t.s} />
-    </span>
-  )) : null;
-
   return (
     <section className="panel comments" aria-labelledby="comments-title">
-      {tiles && <div className="comments__pattern" aria-hidden="true">{tiles}</div>}
       <div className="comments__inner">
         <h2 id="comments-title" className="comments__title">تعليقات</h2>
         <p className="comments__lead">شارك تجربتك أو اسأل من درسوا هذا التخصص.</p>

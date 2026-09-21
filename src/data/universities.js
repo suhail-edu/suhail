@@ -3,6 +3,14 @@ import svuLogo from '../../assets/svu.png';
 import iustLogo from '../../assets/iust.png';
 import aiuLogo from '../../assets/aiu.jpg';
 
+// Campus photos: drop a JPG named after the university slug into assets/universities/
+// (e.g. assets/universities/damascus.jpg, ≥1600px wide). Missing files simply mean no photo.
+const COVERS = import.meta.glob('../../assets/universities/*.{jpg,jpeg,png,webp}', { eager: true, import: 'default', query: '?url' });
+export const coverFor = (slug) => {
+  const hit = Object.entries(COVERS).find(([path]) => path.replace(/^.*\//, '').replace(/\.[^.]+$/, '') === slug);
+  return hit ? hit[1] : null;
+};
+
 // Damascus University content is from the Figma frame "iPhone 17 - 17".
 // The other three entries carry only basic facts and need editorial review.
 export const UNIVERSITIES = [

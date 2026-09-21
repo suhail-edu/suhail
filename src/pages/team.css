@@ -1,0 +1,22 @@
+.team { max-inline-size: 880px; }
+.team__lead { text-align: center; max-inline-size: 48ch; margin-inline: auto; margin-block-end: 8px; }
+
+.team__grid { display: grid; gap: 16px; }
+.member {
+  display: grid; gap: 6px; padding: 20px 22px;
+  border-inline-start: 4px solid var(--c-blue);   /* §3: blue mark on the panel's leading edge */
+}
+.member__name { color: var(--c-white); font-weight: 700; font-size: var(--fs-xl); }
+.member__role { color: var(--c-mist); }
+
+.team__tools { display: grid; gap: 12px; }
+.tool { padding: 14px 4px; border-block-start: 1px solid var(--c-hairline); }
+.tool__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tool__name { color: var(--c-white); font-weight: 700; font-size: var(--fs-lg); }
+.tool__by { color: var(--c-text-secondary); font-size: var(--fs-sm); } /* on ground */
+.tool__note { margin-block-start: 4px; }
+
+@media (min-width: 600px) {
+  .team__grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .member { padding: 26px 24px; }
+}

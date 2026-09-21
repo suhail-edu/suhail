@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from '../../assets/logo.png';
 import Icon from './Icon.jsx';
 import BrandIcon from './BrandIcon.jsx';
 import { FOOTER_GROUPS, SOCIAL_LINKS } from '../data/nav.js';
@@ -39,6 +40,14 @@ export default function Footer() {
               ))}
             </ul>
           </section>
+        </div>
+
+        <div className="footer__bottom">
+          <p className="footer__copy">
+            <img src={logo} alt="" width="18" height="18" />
+            <span>© {new Date().getFullYear()} سهيل — جميع الحقوق محفوظة</span>
+          </p>
+          <p className="footer__made">صُنع بحب لطلاب سوريا</p>
         </div>
       </div>
     </footer>

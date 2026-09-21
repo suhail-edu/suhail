@@ -1,0 +1,13 @@
+# Netlify: build the Vite app and serve dist/ as a single-page app.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# React Router uses real paths (/quiz, /majors/...), so every unknown path must serve index.html.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

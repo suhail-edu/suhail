@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import MajorIcon from '../components/MajorIcon.jsx';
-import StarrySky from '../components/StarrySky.jsx';
 import usePageTitle from '../components/usePageTitle.js';
 import { MAJOR_DETAILS, findBranch, findMajor } from '../data/majors.js';
 import { findUniversity } from '../data/universities.js';
@@ -45,7 +44,6 @@ function Comments({ branch, major }) {
 
   return (
     <section className="panel comments" aria-labelledby="comments-title">
-      <div className="comments__sky" aria-hidden="true"><StarrySky seed={major.id} /></div>
       <div className="comments__inner">
         <h2 id="comments-title" className="comments__title">تعليقات</h2>
         <p className="comments__lead">شارك تجربتك أو اسأل من درسوا هذا التخصص.</p>

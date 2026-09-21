@@ -1,0 +1,25 @@
+.team { max-inline-size: 880px; }
+.team__lead { text-align: center; max-inline-size: 48ch; margin-inline: auto; margin-block-end: 8px; }
+
+.team__grid { display: grid; gap: 16px; }
+.member { display: flex; align-items: center; gap: 16px; padding: 18px 20px; }
+.member__avatar {
+  flex: none; inline-size: 56px; block-size: 56px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--c-blue); color: var(--c-white); font-weight: 700; font-size: var(--fs-2xl);
+  border: 1px solid var(--c-hairline);
+}
+.member__name { color: var(--c-white); font-weight: 700; font-size: var(--fs-lg); }
+
+.team__tools { display: grid; gap: 12px; }
+.tool { padding: 14px 4px; border-block-start: 1px solid var(--c-hairline); }
+.tool__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tool__name { color: var(--c-white); font-weight: 700; font-size: var(--fs-lg); }
+.tool__by { color: var(--c-text-secondary); font-size: var(--fs-sm); } /* on ground */
+.tool__note { margin-block-start: 4px; }
+
+@media (min-width: 600px) {
+  .team__grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .member { flex-direction: column; text-align: center; padding: 28px 20px; gap: 14px; }
+  .member__avatar { inline-size: 72px; block-size: 72px; }
+}

@@ -3,16 +3,14 @@ import './team.css';
 
 // The people behind Suhail, then the tools that helped build it — kept apart on purpose.
 const PEOPLE = [
-  { name: 'ماريا بيان الشتيوي' },
-  { name: 'عمر تقي الدين' },
+  { name: 'ماريا بيان الشتيوي', role: 'تصميم واجهة وتجربة المستخدم (UI/UX)' },
+  { name: 'عمر تقي الدين', role: 'البرمجة والتطوير' },
 ];
 
 const TOOLS = [
   { name: 'Claude', by: 'Anthropic', note: 'مساعد ذكاء اصطناعي ساهم في كتابة الكود وبناء الواجهة.' },
   { name: 'FLORA', by: 'FLORA AI', note: 'منصة ذكاء اصطناعي للصور والتصميم البصري.' },
 ];
-
-const initial = (name) => name.trim().charAt(0);
 
 export default function Team() {
   usePageTitle('فريق العمل');
@@ -28,8 +26,8 @@ export default function Team() {
         <ul className="team__grid">
           {PEOPLE.map((p) => (
             <li key={p.name} className="panel member">
-              <span className="member__avatar" aria-hidden="true">{initial(p.name)}</span>
               <span className="member__name">{p.name}</span>
+              <span className="member__role">{p.role}</span>
             </li>
           ))}
         </ul>

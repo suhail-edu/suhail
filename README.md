@@ -5,6 +5,8 @@ an academic-inclination quiz, a guide to Syrian universities, and the majors on 
 
 Built with **React + plain HTML/CSS** (Vite). No UI framework, no CSS-in-JS.
 
+**Live:** https://suhail-edu.github.io/suhail/ (GitHub Pages) · backup: https://suhail-edu.netlify.app
+
 ## Run it
 
 ```bash
@@ -35,4 +37,13 @@ Requires Node 18+.
 - **States.** Every tappable element has rest, hover (inside `@media (hover: hover)`), pressed, focus and disabled, all derived from `design colors.md` §6.
 - **Accent budget.** One sand primary action per screen, at most three further sand marks.
 
-Routing uses `BrowserRouter`. Netlify is configured in `netlify.toml` (build `npm run build`, publish `dist`, SPA redirect); any other static host needs the same fallback to `index.html`.
+## Deploying
+
+- **GitHub Pages** — `.github/workflows/pages.yml` builds and publishes on every push to `main` of the
+  `suhail-edu/suhail` repository. To ship a change from this repo: `git pull origin main && git push pages main`
+  (where `pages` is a remote pointing at `https://github.com/suhail-edu/suhail.git`).
+- **Netlify** — `netlify.toml` (build `npm run build`, publish `dist`, SPA redirect). Note the free plan charges
+  credits per deploy.
+
+Routing uses `BrowserRouter`; the Pages workflow copies `index.html` to `404.html` as the SPA fallback and sets
+`VITE_BASE` so the build serves from `/<repo>/`. Any other static host needs the same fallback to `index.html`.

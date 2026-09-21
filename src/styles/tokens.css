@@ -33,6 +33,10 @@
   --c-blue-disabled: rgb(60 100 175 / .40);   /* blue @ 40% */
   --c-text-disabled: rgb(228 236 248 / .50);  /* mist @ 50% */
 
+  /* ground at a stated opacity — used to fade a photo into the page (R1-a) */
+  --c-ground-veil: rgb(11 27 56 / .55);
+  --c-ground-clear: rgb(11 27 56 / 0);
+
   /* elevation, mirrored upward for the footer bar that sits above content */
   --shadow-rest-up: 0 -6px 16px -6px rgb(0 0 0 / .55);
 

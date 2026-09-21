@@ -19,8 +19,13 @@
 /* ---- detail (Figma "iPhone 17 - 17") ---- */
 .uni { max-inline-size: 960px; }
 .uni__header { display: grid; justify-items: center; }
-.uni__banner { inline-size: 100%; block-size: 160px; overflow: hidden; }
-.uni__cover { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+.uni__banner { position: relative; inline-size: 100%; block-size: 200px; overflow: hidden; }
+.uni__cover { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: center 62%; display: block; }
+/* fade the photo into the page towards the bottom edge, where the logo disc overlaps it */
+.uni__banner.has-cover::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, var(--c-ground-clear) 55%, var(--c-ground-veil) 100%);
+}
 .uni__name { font-size: var(--fs-2xl); text-align: center; margin-block-start: 12px; }
 .uni__logo {
   position: relative; inline-size: 100px; block-size: 100px; border-radius: 50%;
@@ -47,7 +52,7 @@
 }
 
 @media (min-width: 1024px) {
-  .uni__banner { block-size: 280px; }
+  .uni__banner { block-size: 360px; }
   .uni__body { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: start; }
   .uni__faculties { max-inline-size: none; grid-template-columns: 1fr 1fr; }
 }

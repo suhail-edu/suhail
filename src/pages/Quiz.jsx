@@ -70,7 +70,6 @@ export default function Quiz() {
   if (phase === 'intro') {
     return (
       <section className="container intro" aria-labelledby="intro-title">
-        {playingIntro && <LogoLoader onDone={() => { setPlayingIntro(false); setPhase('branch'); }} />}
         <div className="panel intro__card">
           <img className="intro__mark" src={logo} alt="" width="64" height="64" />
           <h1 id="intro-title" className="intro__title" ref={headingRef} tabIndex={-1}>هل أنت جاهز؟</h1>
@@ -86,12 +85,16 @@ export default function Quiz() {
             ))}
           </ol>
           <p className="intro__note text-secondary">لا توجد إجابات صحيحة أو خاطئة — اختر ما يشبهك فعلاً. يستغرق الاختبار نحو دقيقتين.</p>
-          <div className="intro__actions">
-            <button type="button" className="btn btn--primary intro__cta" onClick={() => setPlayingIntro(true)}>
-              أنا جاهز، لنبدأ
-            </button>
-            <Link to="/" className="btn tap">ليس الآن</Link>
-          </div>
+          {playingIntro ? (
+            <LogoLoader onDone={() => { setPlayingIntro(false); setPhase('branch'); }} />
+          ) : (
+            <div className="intro__actions">
+              <button type="button" className="btn btn--primary intro__cta" onClick={() => setPlayingIntro(true)}>
+                أنا جاهز، لنبدأ
+              </button>
+              <Link to="/" className="btn tap">ليس الآن</Link>
+            </div>
+          )}
         </div>
       </section>
     );

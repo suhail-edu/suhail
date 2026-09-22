@@ -9,7 +9,11 @@
 /* ---- علمي / أدبي: tiles ---- */
 .majors__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 17px 22px; }
 .major-tile { min-block-size: 129px; }
-.major-tile__name { font-size: var(--fs-lg); }
+.major-tile__name {
+  font-size: var(--fs-lg);
+  /* reserve three lines so tiles stay the same height whatever the name's length */
+  min-block-size: calc(3 * 1.35em); display: grid; place-items: center;
+}
 .majors__more { display: flex; justify-content: center; margin-block-start: 28px; }
 .majors__more .btn { min-inline-size: 177px; }
 

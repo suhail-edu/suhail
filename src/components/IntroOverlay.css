@@ -1,16 +1,23 @@
+/* the intro's backdrop: blue → surface radial glow from below (the source's --bg, on tokens) */
 .intro-overlay {
-  position: fixed; inset: 0; z-index: 100;
-  background: var(--c-ground);
-  display: grid; place-items: center;
+  position: fixed; inset: 0; z-index: 100; overflow: hidden;
+  background: radial-gradient(130% 100% at 50% 118%, var(--c-blue) 0%, var(--c-surface) 72%);
   animation: intro-in 200ms ease both;
   transition: opacity 350ms ease;
 }
 .intro-overlay.is-leaving { opacity: 0; pointer-events: none; }
-.intro-overlay__video {
-  inline-size: min(100vw, 177.78vh);   /* 16:9, never cropped */
-  block-size: auto; max-block-size: 100vh;
-  background: var(--c-ground);
+
+/* 1920×1080 stage, scaled to fit the viewport by the component */
+.intro-stage {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden;
+  transform-origin: 0 0; visibility: hidden;
+  font-family: var(--font);
 }
+.intro-cam { position: absolute; inset: 0; transform-origin: 960px 540px; }
+.intro-mark { position: absolute; left: 0; top: 0; width: 240px; height: 240px; overflow: visible; transform-origin: 120px 120px; fill: var(--c-sand); }
+.intro-mask { position: absolute; overflow: hidden; }
+.intro-word { position: absolute; white-space: nowrap; direction: ltr; text-align: center; color: var(--c-sand); font-weight: 700; }
+
 .intro-overlay__skip {
   position: absolute; inset-block-end: max(20px, env(safe-area-inset-bottom)); inset-inline-end: 20px;
   min-block-size: var(--tap); padding: 8px 18px;

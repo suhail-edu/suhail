@@ -1,0 +1,24 @@
+.intro-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--c-ground);
+  display: grid; place-items: center;
+  animation: intro-in 200ms ease both;
+  transition: opacity 350ms ease;
+}
+.intro-overlay.is-leaving { opacity: 0; pointer-events: none; }
+.intro-overlay__video {
+  inline-size: min(100vw, 177.78vh);   /* 16:9, never cropped */
+  block-size: auto; max-block-size: 100vh;
+  background: var(--c-ground);
+}
+.intro-overlay__skip {
+  position: absolute; inset-block-end: max(20px, env(safe-area-inset-bottom)); inset-inline-end: 20px;
+  min-block-size: var(--tap); padding: 8px 18px;
+  background: transparent; color: var(--c-mist); border: 1px solid var(--c-hairline);
+  border-radius: var(--radius-ctl); font-weight: 700;
+  transition: color var(--dur-press), transform var(--dur-press);
+}
+@media (hover: hover) { .intro-overlay__skip:hover { color: var(--c-white); } }
+.intro-overlay__skip:active { color: var(--c-white); transform: scale(.975); }
+@keyframes intro-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .intro-overlay { animation: none; transition: none; } }

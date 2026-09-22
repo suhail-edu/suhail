@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import Icon from '../components/Icon.jsx';
 import Meter from '../components/Meter.jsx';
+import IntroOverlay from '../components/IntroOverlay.jsx';
 import usePageTitle from '../components/usePageTitle.js';
 import { QUESTIONS, TRACKS, scoreAnswers } from '../data/quiz.js';
 import { BRANCHES } from '../data/majors.js';
@@ -19,6 +20,7 @@ const STEPS = [
 export default function Quiz() {
   usePageTitle('اختبار تحديد الميول');
   const [phase, setPhase] = useState('intro'); // intro → branch → questions → result
+  const [playingIntro, setPlayingIntro] = useState(false); // logo animation after "أنا جاهز"
   const [branch, setBranch] = useState(null);
   const [picked, setPicked] = useState(null); // branch tapped, while its animation plays
   const [step, setStep] = useState(0);
@@ -68,6 +70,7 @@ export default function Quiz() {
   if (phase === 'intro') {
     return (
       <section className="container intro" aria-labelledby="intro-title">
+        {playingIntro && <IntroOverlay onDone={() => { setPlayingIntro(false); setPhase('branch'); }} />}
         <div className="panel intro__card">
           <img className="intro__mark" src={logo} alt="" width="64" height="64" />
           <h1 id="intro-title" className="intro__title" ref={headingRef} tabIndex={-1}>هل أنت جاهز؟</h1>
@@ -84,7 +87,7 @@ export default function Quiz() {
           </ol>
           <p className="intro__note text-secondary">لا توجد إجابات صحيحة أو خاطئة — اختر ما يشبهك فعلاً. يستغرق الاختبار نحو دقيقتين.</p>
           <div className="intro__actions">
-            <button type="button" className="btn btn--primary intro__cta" onClick={() => setPhase('branch')}>
+            <button type="button" className="btn btn--primary intro__cta" onClick={() => setPlayingIntro(true)}>
               أنا جاهز، لنبدأ
             </button>
             <Link to="/" className="btn tap">ليس الآن</Link>

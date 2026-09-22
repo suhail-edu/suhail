@@ -16,7 +16,7 @@ function ScrollToTop() {
   return null;
 }
 
-const INTRO_KEY = 'suhail-intro-seen';
+const INTRO_KEY = 'suhail-intro-v2-seen';
 
 export default function Layout() {
   const [showIntro, setShowIntro] = useState(() => {

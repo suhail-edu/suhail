@@ -7,7 +7,11 @@
   display: grid; place-items: center; overflow: hidden; flex: none;
 }
 .uni-tile__logo img { inline-size: 60px; block-size: 60px; object-fit: contain; }
-.uni-tile__name { font-size: var(--fs-md); line-height: 1.4; font-weight: 700; }
+.uni-tile__name {
+  font-size: var(--fs-md); line-height: 1.4; font-weight: 700;
+  /* reserve three lines so every tile is the same height, whatever the name's length */
+  min-block-size: calc(3 * 1.4em); display: grid; place-items: center;
+}
 
 @media (min-width: 600px) {
   .unis__grid { grid-template-columns: repeat(3, 1fr); }

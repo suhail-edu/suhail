@@ -16,16 +16,15 @@ function ScrollToTop() {
   return null;
 }
 
-const INTRO_KEY = 'suhail-intro-v2-seen';
-
 export default function Layout() {
+  // The logo intro plays on every full load of the home page (refresh included);
+  // in-app navigation never triggers it.
   const [showIntro, setShowIntro] = useState(() => {
-    try { return !window.sessionStorage.getItem(INTRO_KEY); } catch { return true; }
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+    const path = window.location.pathname.replace(/\/$/, '');
+    return path === base || path === '';
   });
-  const dismissIntro = () => {
-    try { window.sessionStorage.setItem(INTRO_KEY, '1'); } catch { /* private mode */ }
-    setShowIntro(false);
-  };
+  const dismissIntro = () => setShowIntro(false);
 
   return (
     <div className="app">

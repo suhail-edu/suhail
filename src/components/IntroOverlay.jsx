@@ -4,7 +4,7 @@ import './IntroOverlay.css';
 /**
  * Suhail logo intro — scene 1 of the brand intro, ported as-is from the animation source
  * (same easings, same beat grid at 89 BPM, same 1920×1080 stage scaled to the viewport).
- * Calls onDone when the clip ends, when the viewer skips it, or right away under reduced motion.
+ * Calls onDone when the clip ends, or right away under reduced motion.
  */
 
 // ---- timing: two bars of 89 BPM, scene-1 key moments remapped onto beats ----
@@ -169,7 +169,6 @@ export default function IntroOverlay({ onDone }) {
           <div className="intro-mask" ref={maskRef}><div className="intro-word" ref={wordRef}>SUHAIL</div></div>
         </div>
       </div>
-      <button type="button" className="intro-overlay__skip" onClick={finish}>تخطي</button>
     </div>
   );
 }

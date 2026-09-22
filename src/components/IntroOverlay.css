@@ -25,13 +25,4 @@
 .intro-mask { position: absolute; overflow: hidden; }
 .intro-word { position: absolute; white-space: nowrap; direction: ltr; text-align: center; color: var(--c-sand); font-weight: 700; }
 
-.intro-overlay__skip {
-  position: absolute; inset-block-end: max(20px, env(safe-area-inset-bottom)); inset-inline-end: 20px;
-  min-block-size: var(--tap); padding: 8px 18px;
-  background: transparent; color: var(--c-mist); border: 1px solid var(--c-hairline);
-  border-radius: var(--radius-ctl); font-weight: 700;
-  transition: color var(--dur-press), transform var(--dur-press);
-}
-@media (hover: hover) { .intro-overlay__skip:hover { color: var(--c-white); } }
-.intro-overlay__skip:active { color: var(--c-white); transform: scale(.975); }
 @media (prefers-reduced-motion: reduce) { .intro-overlay { transition: none; } }

@@ -33,7 +33,7 @@
 
 /* Figma "nave - bar": 57px tall, three links spread across the width */
 .mobilenav { background: var(--c-surface); border-block-start: 1px solid var(--c-hairline); }
-.mobilenav__list { display: flex; justify-content: space-between; align-items: stretch; min-block-size: 57px; gap: var(--tap-gap); }
+.mobilenav__list { display: flex; justify-content: space-between; align-items: stretch; min-block-size: 57px; gap: var(--tap-gap); padding-inline: 12px; }
 .mobilenav__list li { display: flex; }
 
 .searchbar { background: var(--c-surface); border-block-start: 1px solid var(--c-hairline); padding-block: 12px; }
@@ -42,5 +42,5 @@
 
 @media (min-width: 1024px) {
   .appbar__nav { display: flex; gap: var(--tap-gap); margin-inline-start: 24px; }
-  .appbar__burger, .mobilenav { display: none; }
+  .mobilenav { display: none; }
 }

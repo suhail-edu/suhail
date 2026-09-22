@@ -6,7 +6,6 @@ import { NAV_LINKS } from '../data/nav.js';
 import './AppBar.css';
 
 export default function AppBar() {
-  const [navOpen, setNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
   const location = useLocation();
@@ -14,7 +13,6 @@ export default function AppBar() {
 
   // close the mobile nav / search on every route change
   useEffect(() => {
-    setNavOpen(false);
     setSearchOpen(false);
   }, [location.pathname]);
 
@@ -47,28 +45,18 @@ export default function AppBar() {
             aria-label="بحث"
             aria-expanded={searchOpen}
             aria-controls="site-search"
-            onClick={() => { setSearchOpen((v) => !v); setNavOpen(false); }}
+            onClick={() => setSearchOpen((v) => !v)}
           >
             <Icon name="search" />
           </button>
           <Link to="/login" className="iconbtn" aria-label="تسجيل الدخول">
             <Icon name="user" />
           </Link>
-          <button
-            type="button"
-            className="iconbtn appbar__burger"
-            aria-label={navOpen ? 'إغلاق القائمة' : 'القائمة'}
-            aria-expanded={navOpen}
-            aria-controls="mobile-nav"
-            onClick={() => { setNavOpen((v) => !v); setSearchOpen(false); }}
-          >
-            <Icon name={navOpen ? 'close' : 'menu'} />
-          </button>
         </div>
       </div>
 
-      {navOpen && (
-        <nav id="mobile-nav" className="mobilenav" aria-label="التنقل الرئيسي">
+      {/* Figma "nave - bar": a 57px bar under the app bar on phones (the inline nav takes over ≥1024) */}
+      <nav id="mobile-nav" className="mobilenav" aria-label="التنقل الرئيسي">
           <ul className="container mobilenav__list">
             {NAV_LINKS.map((l) => (
               <li key={l.to}>
@@ -79,7 +67,6 @@ export default function AppBar() {
             ))}
           </ul>
         </nav>
-      )}
 
       {searchOpen && (
         <div id="site-search" className="searchbar">

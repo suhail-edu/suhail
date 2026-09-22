@@ -1,7 +1,8 @@
-import damascusLogo from '../../assets/damauni.png';
-import svuLogo from '../../assets/svu.png';
-import iustLogo from '../../assets/iust.png';
-import aiuLogo from '../../assets/aiu.jpg';
+// 160px copies of the logos in assets/ (scripts/optimize-logos.cjs) — the originals are up to 600px.
+import damascusLogo from '../generated/logos/damauni.jpg';
+import svuLogo from '../generated/logos/svu.jpg';
+import iustLogo from '../generated/logos/iust.jpg';
+import aiuLogo from '../generated/logos/aiu.jpg';
 
 // Campus photos: drop a JPG named after the university slug into assets/universities/
 // (e.g. assets/universities/damascus.jpg, ≥1600px wide). Missing files simply mean no photo.

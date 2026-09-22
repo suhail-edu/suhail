@@ -134,7 +134,7 @@ export default function MajorDetail() {
                 return (
                   <li key={u.slug}>
                     <Link to={`/universities/${uni.slug}`} className="tap uni-row">
-                      <span className="uni-row__logo"><img src={uni.logo} alt="" /></span>
+                      <span className="uni-row__logo"><img src={uni.logo} alt="" loading="lazy" decoding="async" width="34" height="34" /></span>
                       <span className="uni-row__text">
                         <span className="uni-row__name">{uni.name}</span>
                         <span className="uni-row__faculty">{u.faculty}</span>

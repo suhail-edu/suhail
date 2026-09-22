@@ -15,7 +15,7 @@ export default function University() {
     <article className="container page uni">
       <header className="uni__header">
         <div className={`panel uni__banner ${cover ? 'has-cover' : ''}`}>
-          {cover && <img className="uni__cover" src={cover} alt={`حرم ${u.name}`} />}
+          {cover && <img className="uni__cover" src={cover} alt={`حرم ${u.name}`} decoding="async" fetchPriority="high" />}
         </div>
         <div className="uni__logo"><img src={u.logo} alt={`شعار ${u.name}`} /></div>
         <h1 className="uni__name">{u.name}</h1>

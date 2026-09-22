@@ -28,7 +28,7 @@ export default function Universities() {
                 {UNIVERSITIES.filter((u) => u.type === g.id).map((u) => (
                   <li key={u.slug}>
                     <Link to={`/universities/${u.slug}`} className="tap tile uni-tile">
-                      <span className="uni-tile__logo"><img src={u.logo} alt="" /></span>
+                      <span className="uni-tile__logo"><img src={u.logo} alt="" loading="lazy" decoding="async" width="60" height="60" /></span>
                       <span className="uni-tile__name">{u.name}</span>
                     </Link>
                   </li>

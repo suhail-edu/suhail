@@ -46,7 +46,7 @@ export default function Team() {
             return (
               <li key={t.id} className="tool">
                 <a className="tool__logo" href={t.href} target="_blank" rel="noopener noreferrer" aria-label={t.name}>
-                  {logo ? <img src={logo} alt="" /> : <span className="tool__mark" lang="en" aria-hidden="true">{t.name.charAt(0)}</span>}
+                  {logo ? <img src={logo} alt="" loading="lazy" decoding="async" /> : <span className="tool__mark" lang="en" aria-hidden="true">{t.name.charAt(0)}</span>}
                 </a>
                 <div className="tool__body">
                   <div className="tool__head">

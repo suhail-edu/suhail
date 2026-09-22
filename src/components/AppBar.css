@@ -31,10 +31,17 @@
 }
 .navlink:active { color: var(--c-white); transform: translateY(1px); }
 
-/* Figma "nave - bar": 57px tall, three links spread across the width */
-.mobilenav { background: var(--c-surface); border-block-start: 1px solid var(--c-hairline); }
+/* Figma "nave - bar": 57px tall, three links spread across the width — pinned to the bottom on phones */
+.mobilenav {
+  position: fixed; inset-inline: 0; inset-block-end: 0; z-index: 20;
+  background: var(--c-surface);
+  border-block-start: 1px solid var(--c-hairline);   /* R5 */
+  box-shadow: var(--shadow-rest-up);                  /* R5 */
+  padding-block-end: env(safe-area-inset-bottom);
+}
 .mobilenav__list { display: flex; justify-content: space-between; align-items: stretch; min-block-size: 57px; gap: var(--tap-gap); padding-inline: 12px; }
-.mobilenav__list li { display: flex; }
+.mobilenav__list li { display: flex; flex: 1; }
+.mobilenav .navlink { flex: 1; justify-content: center; }
 
 .searchbar { background: var(--c-surface); border-block-start: 1px solid var(--c-hairline); padding-block: 12px; }
 .searchbar__form { display: flex; gap: var(--tap-gap); }

@@ -37,7 +37,8 @@ html { scrollbar-color: var(--c-sand) var(--c-surface); }
 /* §6 focus: 2px sand outline, 3px offset — everything, everywhere */
 :focus-visible { outline: 2px solid var(--c-sand); outline-offset: 3px; }
 
-.app { min-block-size: 100dvh; display: flex; flex-direction: column; }
+.app { min-block-size: 100dvh; display: flex; flex-direction: column; padding-block-end: calc(57px + env(safe-area-inset-bottom)); } /* bottom nav on phones */
+@media (min-width: 1024px) { .app { padding-block-end: 0; } }
 .main { flex: 1; }
 
 .container {

@@ -10,3 +10,7 @@ createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 );
+
+// The app (and the intro overlay, when it applies) is now mounted: drop the static boot screen
+// on the next frame so the hand-off is seamless.
+requestAnimationFrame(() => document.getElementById('boot')?.remove());

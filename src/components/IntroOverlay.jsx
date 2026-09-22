@@ -83,6 +83,12 @@ export default function IntroOverlay({ onDone }) {
     let raf = 0;
     let cancelled = false;
 
+    const setMark = (cx, cy, size, ra, rb, base = 240) => {
+      markRef.current.style.transform = `translate(${cx - base / 2}px,${cy - base / 2}px) scale(${size / base})`;
+      paRef.current.setAttribute('transform', `rotate(${ra} 59 59)`);
+      pbRef.current.setAttribute('transform', `rotate(${rb} 59 59)`);
+    };
+
     // fit the 1920×1080 stage into the viewport
     const stage = stageRef.current;
     const fit = () => {
@@ -92,6 +98,9 @@ export default function IntroOverlay({ onDone }) {
       stage.style.top = `${(window.innerHeight - 1080 * s) / 2}px`;
     };
     window.addEventListener('resize', fit); fit();
+    // first frame right away (mark at rest), so nothing is blank while the font loads
+    setMark(960, 540, 120, 0, 0);
+    stage.style.visibility = 'visible';
 
     // lockup proportions from the brand lockup: mark 150px, wordmark to its right
     const MARK_L = 150, GAP = MARK_L * (35 / 55), textW = MARK_L * (162 / 55);
@@ -102,12 +111,6 @@ export default function IntroOverlay({ onDone }) {
       const total = MARK_L + GAP + textW, left = 960 - total / 2;
       markLx = left + MARK_L / 2;
       w1 = placeWord(maskRef.current, wordRef.current, 'SUHAIL', 700, size, left + MARK_L + GAP + textW / 2, 540 + MARK_L / 2 - capH / 2);
-    };
-
-    const setMark = (cx, cy, size, ra, rb, base = 240) => {
-      markRef.current.style.transform = `translate(${cx - base / 2}px,${cy - base / 2}px) scale(${size / base})`;
-      paRef.current.setAttribute('transform', `rotate(${ra} 59 59)`);
-      pbRef.current.setAttribute('transform', `rotate(${rb} 59 59)`);
     };
 
     // scene 1 — verbatim

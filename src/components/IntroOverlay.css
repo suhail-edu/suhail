@@ -2,7 +2,6 @@
 .intro-overlay {
   position: fixed; inset: 0; z-index: 100; overflow: hidden;
   background: radial-gradient(130% 100% at 50% 118%, var(--c-blue) 0%, var(--c-surface) 72%);
-  animation: intro-in 200ms ease both;
   transition: opacity 350ms ease;
 }
 .intro-overlay.is-leaving { opacity: 0; pointer-events: none; }
@@ -27,5 +26,4 @@
 }
 @media (hover: hover) { .intro-overlay__skip:hover { color: var(--c-white); } }
 .intro-overlay__skip:active { color: var(--c-white); transform: scale(.975); }
-@keyframes intro-in { from { opacity: 0; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .intro-overlay { animation: none; transition: none; } }
+@media (prefers-reduced-motion: reduce) { .intro-overlay { transition: none; } }

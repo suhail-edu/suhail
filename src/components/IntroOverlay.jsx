@@ -82,6 +82,7 @@ export default function IntroOverlay({ onDone }) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { finish(); return undefined; }
     let raf = 0;
     let cancelled = false;
+    document.documentElement.classList.add('intro-open'); // no selection anywhere while the intro plays
 
     const setMark = (cx, cy, size, ra, rb, base = 240) => {
       markRef.current.style.transform = `translate(${cx - base / 2}px,${cy - base / 2}px) scale(${size / base})`;
@@ -150,6 +151,7 @@ export default function IntroOverlay({ onDone }) {
 
     return () => {
       cancelled = true;
+      document.documentElement.classList.remove('intro-open');
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', fit);
     };

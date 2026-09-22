@@ -1,4 +1,4 @@
-.logo-loader { display: inline-flex; align-items: center; gap: 14px; min-block-size: var(--tap); }
+.logo-loader { display: inline-flex; align-items: center; gap: 14px; min-block-size: var(--tap); user-select: none; -webkit-user-select: none; }
 .logo-loader__mark { fill: var(--c-sand); overflow: visible; flex: none; }
 /* the whole mark turns half a revolution, rests, turns again — the intro's beat */
 .logo-loader__spin { transform-box: view-box; transform-origin: 59px 59px; animation: half-turn 1000ms cubic-bezier(.65, 0, .35, 1) infinite; }

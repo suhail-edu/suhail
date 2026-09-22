@@ -16,7 +16,7 @@
     <!-- Boot screen: the intro's exact first frame (its gradient backdrop), painted before any script
          loads so nothing flashes or jumps. Colours are the blue / surface tokens (CSS variables aren't
          available yet). -->
-    <div id="boot" style="position:fixed;inset:0;z-index:99;background:radial-gradient(130% 100% at 50% 118%,#3C64AF 0%,#1E2D5E 72%)"></div>
+    <div id="boot" style="position:fixed;inset:0;z-index:99;user-select:none;-webkit-user-select:none;background:radial-gradient(130% 100% at 50% 118%,#3C64AF 0%,#1E2D5E 72%)"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

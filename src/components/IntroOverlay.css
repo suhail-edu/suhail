@@ -3,7 +3,12 @@
   position: fixed; inset: 0; z-index: 100; overflow: hidden;
   background: radial-gradient(130% 100% at 50% 118%, var(--c-blue) 0%, var(--c-surface) 72%);
   transition: opacity 350ms ease;
+  /* nothing here is selectable or draggable — a stray drag mid-animation must not highlight anything */
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
 }
+.intro-overlay * { user-select: none; -webkit-user-select: none; }
+.intro-open body { user-select: none; -webkit-user-select: none; }
+.intro-overlay svg { pointer-events: none; }
 .intro-overlay.is-leaving { opacity: 0; pointer-events: none; }
 
 /* 1920×1080 stage, scaled to fit the viewport by the component */

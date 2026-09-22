@@ -12,7 +12,7 @@
   color: var(--c-white); text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: var(--fs-xl);
   transition: transform var(--dur-press);
 }
-.appbar__brand img { inline-size: 28px; block-size: 28px; }
+.appbar__brand svg { inline-size: 28px; block-size: 28px; flex: none; }
 .appbar__brand:active { transform: scale(.975); }
 
 .appbar__nav { display: none; }

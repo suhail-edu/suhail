@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.png';
+import Logo from '../components/Logo.jsx';
 import usePageTitle from '../components/usePageTitle.js';
 import './Home.css';
 
@@ -34,7 +34,7 @@ export default function Home() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="container hero__inner">
           <div className="hero__brand">
-            <img className="hero__mark" src={logo} alt="شعار سهيل" width="58" height="58" />
+            <Logo className="hero__mark" on="dark" size={58} title="شعار سهيل" />
             <h1 id="hero-title" className="hero__title">نجم المسار ... خير اختيار</h1>
           </div>
           <div className="hero__copy">

@@ -44,7 +44,7 @@
   color: var(--c-text-secondary); font-size: var(--fs-sm);   /* mist @62% on surface: 5.23:1 */
 }
 .footer__copy { display: inline-flex; align-items: center; gap: 8px; }
-.footer__copy img { inline-size: 18px; block-size: 18px; }
+.footer__copy svg { inline-size: 18px; block-size: 18px; flex: none; }
 .footer__made { color: var(--c-text-secondary); }
 
 @media (min-width: 1024px) {

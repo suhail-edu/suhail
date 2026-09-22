@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.png';
 import Icon from '../components/Icon.jsx';
+import Logo from '../components/Logo.jsx';
 import Meter from '../components/Meter.jsx';
 import LogoLoader from '../components/LogoLoader.jsx';
 import usePageTitle from '../components/usePageTitle.js';
@@ -71,7 +71,7 @@ export default function Quiz() {
     return (
       <section className="container intro" aria-labelledby="intro-title">
         <div className="panel intro__card">
-          <img className="intro__mark" src={logo} alt="" width="64" height="64" />
+          <Logo className="intro__mark" on="dark" size={64} />
           <h1 id="intro-title" className="intro__title" ref={headingRef} tabIndex={-1}>هل أنت جاهز؟</h1>
           <p className="intro__lead">
             لتأدية اختبار تحديد ميولك الأكاديمي واكتشاف شغفك الحقيقي

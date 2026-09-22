@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../../assets/logo.png';
 import Icon from './Icon.jsx';
+import Logo from './Logo.jsx';
 import { NAV_LINKS } from '../data/nav.js';
 import './AppBar.css';
 
@@ -28,7 +28,7 @@ export default function AppBar() {
     <header className="appbar">
       <div className="container appbar__row">
         <Link to="/" className="appbar__brand" aria-label="سهيل — الصفحة الرئيسية">
-          <img src={logo} alt="" width="28" height="28" />
+          <Logo on="dark" size={28} />
           <span>سهيل</span>
         </Link>
 

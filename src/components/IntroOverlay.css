@@ -8,6 +8,9 @@
 }
 .intro-overlay * { user-select: none; -webkit-user-select: none; }
 .intro-open body { user-select: none; -webkit-user-select: none; }
+/* the page underneath must not scroll (wheel, keys or touch) while the intro plays */
+.intro-open, .intro-open body { overflow: hidden; overscroll-behavior: none; }
+.intro-overlay { touch-action: none; }
 .intro-overlay svg { pointer-events: none; }
 .intro-overlay.is-leaving { opacity: 0; pointer-events: none; }
 

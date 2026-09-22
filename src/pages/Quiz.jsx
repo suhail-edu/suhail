@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import Icon from '../components/Icon.jsx';
 import Meter from '../components/Meter.jsx';
-import IntroOverlay from '../components/IntroOverlay.jsx';
+import LogoLoader from '../components/LogoLoader.jsx';
 import usePageTitle from '../components/usePageTitle.js';
 import { QUESTIONS, TRACKS, scoreAnswers } from '../data/quiz.js';
 import { BRANCHES } from '../data/majors.js';
@@ -70,7 +70,7 @@ export default function Quiz() {
   if (phase === 'intro') {
     return (
       <section className="container intro" aria-labelledby="intro-title">
-        {playingIntro && <IntroOverlay onDone={() => { setPlayingIntro(false); setPhase('branch'); }} />}
+        {playingIntro && <LogoLoader onDone={() => { setPlayingIntro(false); setPhase('branch'); }} />}
         <div className="panel intro__card">
           <img className="intro__mark" src={logo} alt="" width="64" height="64" />
           <h1 id="intro-title" className="intro__title" ref={headingRef} tabIndex={-1}>هل أنت جاهز؟</h1>

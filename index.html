@@ -16,9 +16,16 @@
     <!-- Boot screen: painted before any script loads so the page never flashes under the intro.
          Colours are the blue / surface / sand tokens (CSS variables are not available yet). -->
     <div id="boot" style="position:fixed;inset:0;z-index:99;display:grid;place-items:center;background:radial-gradient(130% 100% at 50% 118%,#3C64AF 0%,#1E2D5E 72%)">
-      <svg width="120" height="120" viewBox="0 0 118 118" fill="#F2DD83" aria-hidden="true">
-        <path d="M59 0H76V37A5 5 0 0 0 81 42H118V59H76A17 17 0 0 1 59 42Z"/>
-        <path transform="rotate(180 59 59)" d="M59 0H76V37A5 5 0 0 0 81 42H118V59H76A17 17 0 0 1 59 42Z"/>
+      <style>
+        @keyframes boot-turn { 0% { transform: rotate(0deg); } 55% { transform: rotate(180deg); } 100% { transform: rotate(180deg); } }
+        #boot g { transform-box: view-box; transform-origin: 59px 59px; animation: boot-turn 1s cubic-bezier(.65,0,.35,1) infinite; }
+        @media (prefers-reduced-motion: reduce) { #boot g { animation: none; } }
+      </style>
+      <svg width="120" height="120" viewBox="-30 -30 178 178" fill="#F2DD83" aria-hidden="true">
+        <g>
+          <path d="M59 0H76V37A5 5 0 0 0 81 42H118V59H76A17 17 0 0 1 59 42Z"/>
+          <path transform="rotate(180 59 59)" d="M59 0H76V37A5 5 0 0 0 81 42H118V59H76A17 17 0 0 1 59 42Z"/>
+        </g>
       </svg>
     </div>
     <div id="root"></div>

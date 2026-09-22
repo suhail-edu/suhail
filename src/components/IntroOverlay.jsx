@@ -142,9 +142,11 @@ export default function IntroOverlay({ onDone }) {
       raf = requestAnimationFrame(loop);
     };
 
-    // wait briefly for Cairo so the wordmark measures right; never wait longer than 1.2s
-    const fontReady = document.fonts?.load ? document.fonts.load('700 100px Cairo', 'SUHAIL') : Promise.resolve();
-    Promise.race([fontReady, new Promise((r) => setTimeout(r, 1200))]).then(start, start);
+    // start right away with whatever font is available; when Cairo arrives, re-measure the wordmark
+    start();
+    if (document.fonts?.load) {
+      document.fonts.load('700 100px Cairo', 'SUHAIL').then(() => { if (!cancelled && !doneRef.current) layout(); }).catch(() => {});
+    }
 
     return () => {
       cancelled = true;

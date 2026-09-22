@@ -49,5 +49,5 @@
 
 @media (min-width: 1024px) {
   .appbar__nav { display: flex; gap: var(--tap-gap); margin-inline-start: 24px; }
-  .mobilenav { display: none; }
+  .mobilenav, .appbar__back { display: none; }
 }

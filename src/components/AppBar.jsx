@@ -10,6 +10,14 @@ export default function AppBar() {
   const [query, setQuery] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+  const isHome = location.pathname === '/';
+  const onAuth = location.pathname === '/login' || location.pathname === '/signup';
+  // back: to the previous page when the visitor navigated inside the site, otherwise home
+  // (React Router marks a direct entry with location.key === 'default')
+  const goBack = () => {
+    if (location.key && location.key !== 'default') navigate(-1);
+    else navigate('/');
+  };
 
   // close the mobile nav / search on every route change
   useEffect(() => {
@@ -49,9 +57,16 @@ export default function AppBar() {
           >
             <Icon name="search" />
           </button>
-          <Link to="/login" className="iconbtn" aria-label="تسجيل الدخول">
-            <Icon name="user" />
-          </Link>
+          {!onAuth && (
+            <Link to="/login" className="iconbtn" aria-label="تسجيل الدخول" aria-current={onAuth ? 'page' : undefined}>
+              <Icon name="user" />
+            </Link>
+          )}
+          {!isHome && (
+            <button type="button" className="iconbtn appbar__back" aria-label="رجوع" onClick={goBack}>
+              <Icon name="chevron-end" />
+            </button>
+          )}
         </div>
       </div>
 
